@@ -1,0 +1,107 @@
+{
+  "source": "video/b667ffa51c09b5d564d96c248cec54f4.mp4",
+  "source_sha256": "859244229e8e4e4fc8576fcf0949f2a51c490c4b64add61d2cb8d4a3aeb3c785",
+  "source_metadata": {
+    "fps": 30.0,
+    "duration": 35.39,
+    "size": [
+      1026,
+      720
+    ]
+  },
+  "method": "Manual visual selection; frame-accurate re-encoding.",
+  "scope": "Video extraction only. No human keypoints, robot trajectories, or training.",
+  "audio_policy": "Silent clips; original audio remains in the unchanged source.",
+  "clips": [
+    {
+      "id": "01_side_step",
+      "file": "clips/01_side_step.mp4",
+      "frames": [
+        84,
+        279
+      ],
+      "description": "Repeated lateral evasive steps with arm and torso movement.",
+      "full_body": true,
+      "source_start_s": 2.8,
+      "source_end_s": 9.3,
+      "duration_s": 6.5,
+      "frame_count": 195,
+      "fps": 30,
+      "size": [
+        1026,
+        720
+      ],
+      "audio": false,
+      "sha256": "d77b68e81c702ab17430494635b2a3f28b633c9d4095f89e4fe53d0513281bd9",
+      "validation": "all frames decoded; exact frame count and size checked"
+    },
+    {
+      "id": "02_kick_step",
+      "file": "clips/02_kick_step.mp4",
+      "frames": [
+        372,
+        495
+      ],
+      "description": "Crossing/kicking leg movement with both arms extended.",
+      "full_body": true,
+      "source_start_s": 12.4,
+      "source_end_s": 16.5,
+      "duration_s": 4.1,
+      "frame_count": 123,
+      "fps": 30,
+      "size": [
+        1026,
+        720
+      ],
+      "audio": false,
+      "sha256": "6dc48f7afaaf7440ce925e81a8e1d7919124a71420d098a095fa76fe7e2d6fd9",
+      "validation": "all frames decoded; exact frame count and size checked"
+    },
+    {
+      "id": "03_arm_body_sway",
+      "file": "clips/03_arm_body_sway.mp4",
+      "frames": [
+        747,
+        969
+      ],
+      "description": "Repeated arm opening/lifting, body sway and stepping.",
+      "full_body": false,
+      "note": "Source cuts to close views around 28.37--30.30 s; feet are partly hidden.",
+      "source_start_s": 24.9,
+      "source_end_s": 32.3,
+      "duration_s": 7.4,
+      "frame_count": 222,
+      "fps": 30,
+      "size": [
+        1026,
+        720
+      ],
+      "audio": false,
+      "sha256": "b83dcbe6c3014352362eec3ce3c4c49944ec7e4890b311ca9dec86217156bf68",
+      "validation": "all frames decoded; exact frame count and size checked"
+    },
+    {
+      "id": "03_full_body_excerpt",
+      "file": "clips/full_body/03_arm_body_sway_full_body.mp4",
+      "frames": [
+        747,
+        850
+      ],
+      "description": "Continuous full-body excerpt before the first close-view edit.",
+      "full_body": true,
+      "note": "An additional partial excerpt, not the complete third performance.",
+      "source_start_s": 24.9,
+      "source_end_s": 28.333333333333332,
+      "duration_s": 3.433333333333333,
+      "frame_count": 103,
+      "fps": 30,
+      "size": [
+        1026,
+        720
+      ],
+      "audio": false,
+      "sha256": "1fd5c30d382b5a535bb9256db23e6c23d32fcb222f4b3cb532cecc9d169f5b7c",
+      "validation": "all frames decoded; exact frame count and size checked"
+    }
+  ]
+}

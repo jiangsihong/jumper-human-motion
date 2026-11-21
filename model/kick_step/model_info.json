@@ -1,0 +1,19 @@
+{
+  "name": "kick_step",
+  "task": "jumper.human_kick_step",
+  "policy_version": "ppo_v1",
+  "checkpoint_file": "kick_step/kick_step.pt",
+  "source_checkpoint": "logs/jumper/jumper.human_kick_step/2026-11-02_19-20-30/model_1999.pt",
+  "source_sha256": "aef0cf0449554312ff005bb5b33ed33cbc552375c8551ebccdcbbf8ce25784eb",
+  "iteration_index": 1999,
+  "completed_iterations": 2000,
+  "algorithm": "PPO",
+  "status": "trained candidate; not labeled best or hardware validated",
+  "contents": "Full original checkpoint; rename/copy only, optimizer and training state retained",
+  "validation": {
+    "cpu_checkpoint_load": "passed",
+    "all_saved_tensors_finite": true,
+    "tensor_count": 76,
+    "copy_sha256_match": true
+  }
+}

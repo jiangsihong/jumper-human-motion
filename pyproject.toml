@@ -1,7 +1,7 @@
 [project]
 name = "mjrl-lab"
 version = "0.0.1"
-description = "Dual-backend MuJoCo reinforcement learning framework: MuJoCo Warp on the GPU and native MuJoCo on multi-threaded CPU, sharing one set of managers and rsl_rl code"
+description = "Human-video motion retargeting and PPO reference-tracking experiments for the Jumper hexapod, extending the upstream dual-backend framework"
 requires-python = ">=3.10,<3.14"
 
 # mjlab and rsl_rl are vendored copies under rl/ (see docs/VENDOR.md), so what
@@ -59,9 +59,10 @@ dependencies = [
 ]
 
 [project.urls]
-Homepage = "https://github.com/KingKongRobotics/jumper"
-Repository = "https://github.com/KingKongRobotics/jumper"
-Issues = "https://github.com/KingKongRobotics/jumper/issues"
+Homepage = "https://github.com/jiangsihong/jumper-human-motion"
+Repository = "https://github.com/jiangsihong/jumper-human-motion"
+Issues = "https://github.com/jiangsihong/jumper-human-motion/issues"
+Upstream = "https://github.com/KingKongRobotics/jumper"
 
 [project.optional-dependencies]
 dev = ["pytest", "ruff"]

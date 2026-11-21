@@ -1,0 +1,198 @@
+{
+  "status": "kinematic mapping draft",
+  "training_started": false,
+  "reports": [
+    {
+      "name": "01_side_step",
+      "source": {
+        "frames": 195,
+        "source_start_s": 2.8,
+        "invalid_landmark_samples": 0,
+        "observed_12_landmark_samples": 2340,
+        "source_type": "monocular estimated landmarks; filtered/interpolated where masked",
+        "third_clip_policy": "all extracted frames"
+      },
+      "frames": 708,
+      "dt": 0.02,
+      "duration_s": 14.14,
+      "source_mapping_window_s": [
+        2.8,
+        9.3
+      ],
+      "reference": "video/human_motion_01/v1/trajectories/01_side_step/reference.npz",
+      "detailed_trajectory": "video/human_motion_01/v1/mapping/01_side_step_robot_trajectory.npz",
+      "reference_type": "kinematic candidate, no learning and no dynamic rollout",
+      "max_joint_speed_rad_s": 4.499999999999998,
+      "min_joint_limit_margin_rad": 0.025232470308116817,
+      "max_foot_target_error_m": 0.023885759299211842,
+      "mean_foot_target_error_m": 0.00016845727007848904,
+      "min_target_near_ground_polygon_margin_m": 0.008700462849351014,
+      "polygon_margin_note": "geometric target-foot heuristic only, not a contact-based stability certificate",
+      "max_floor_penetration_m": 0.00042591037485427245,
+      "max_self_penetration_m": 0.0,
+      "adaptation": "arm priority; front gait attenuated while gesturing; rear/middle lift capped 3.5mm; COM shifted into support polygon",
+      "training_format_conversion": {
+        "status": "passed",
+        "path": "video/human_motion_01/v1/trajectories/01_side_step/.cache/reference.motion.npz",
+        "note": "schema and kinematic checks only; not dynamic feasibility"
+      },
+      "full_reference_audit": {
+        "frames": 708,
+        "includes_lead_and_tail": true,
+        "max_floor_penetration_m": 0.00042591037485427245,
+        "max_self_penetration_m": 0.0,
+        "min_geometric_floor_contacts": 0,
+        "min_contact_polygon_margin_m": -0.10858875878599214,
+        "frames_without_nondegenerate_contact_polygon": 665,
+        "note": "contacts on prescribed poses; no contact-force or dynamic stability guarantee",
+        "worst_penetration_pairs": {
+          "LR_foot_tip_link_meshcol | mapping_floor": {
+            "penetration_m": 0.00042591037485427245,
+            "time_s": 4.64
+          },
+          "RM_foot_tip_link_meshcol | mapping_floor": {
+            "penetration_m": 0.0002422448074075982,
+            "time_s": 13.18
+          }
+        }
+      },
+      "preview": {
+        "video": "video/human_motion_01/v1/previews/01_side_step_robot_reference.mp4",
+        "contact_sheet": "video/human_motion_01/v1/previews/01_side_step_robot_reference.contact_sheet.png",
+        "trajectory_samples": 708,
+        "video_frames": 425,
+        "trajectory_duration_s": 14.14,
+        "video_fps": 30,
+        "preview_type": "Kinematic reference preview (no physics rollout)"
+      }
+    },
+    {
+      "name": "02_kick_step",
+      "source": {
+        "frames": 123,
+        "source_start_s": 12.4,
+        "invalid_landmark_samples": 0,
+        "observed_12_landmark_samples": 1476,
+        "source_type": "monocular estimated landmarks; filtered/interpolated where masked",
+        "third_clip_policy": "all extracted frames"
+      },
+      "frames": 492,
+      "dt": 0.02,
+      "duration_s": 9.82,
+      "source_mapping_window_s": [
+        12.4,
+        16.5
+      ],
+      "reference": "video/human_motion_01/v1/trajectories/02_kick_step/reference.npz",
+      "detailed_trajectory": "video/human_motion_01/v1/mapping/02_kick_step_robot_trajectory.npz",
+      "reference_type": "kinematic candidate, no learning and no dynamic rollout",
+      "max_joint_speed_rad_s": 4.499999999999996,
+      "min_joint_limit_margin_rad": 0.025000000000004796,
+      "max_foot_target_error_m": 0.014404317426528953,
+      "mean_foot_target_error_m": 0.00021832946167165993,
+      "min_target_near_ground_polygon_margin_m": 0.008698541432678317,
+      "polygon_margin_note": "geometric target-foot heuristic only, not a contact-based stability certificate",
+      "max_floor_penetration_m": 0.0014115936414996946,
+      "max_self_penetration_m": 0.0,
+      "adaptation": "arm priority; front gait attenuated while gesturing; rear/middle lift capped 3.5mm; COM shifted into support polygon",
+      "training_format_conversion": {
+        "status": "passed",
+        "path": "video/human_motion_01/v1/trajectories/02_kick_step/.cache/reference.motion.npz",
+        "note": "schema and kinematic checks only; not dynamic feasibility"
+      },
+      "full_reference_audit": {
+        "frames": 492,
+        "includes_lead_and_tail": true,
+        "max_floor_penetration_m": 0.0014115936414996946,
+        "max_self_penetration_m": 0.0,
+        "min_geometric_floor_contacts": 0,
+        "min_contact_polygon_margin_m": -0.1121995419362574,
+        "frames_without_nondegenerate_contact_polygon": 426,
+        "note": "contacts on prescribed poses; no contact-force or dynamic stability guarantee",
+        "worst_penetration_pairs": {
+          "LR_foot_tip_link_meshcol | mapping_floor": {
+            "penetration_m": 0.0014115936414996946,
+            "time_s": 7.36
+          },
+          "LM_foot_tip_link_meshcol | mapping_floor": {
+            "penetration_m": 0.0004820058345156794,
+            "time_s": 8.86
+          }
+        }
+      },
+      "preview": {
+        "video": "video/human_motion_01/v1/previews/02_kick_step_robot_reference.mp4",
+        "contact_sheet": "video/human_motion_01/v1/previews/02_kick_step_robot_reference.contact_sheet.png",
+        "trajectory_samples": 492,
+        "video_frames": 295,
+        "trajectory_duration_s": 9.82,
+        "video_fps": 30,
+        "preview_type": "Kinematic reference preview (no physics rollout)"
+      }
+    },
+    {
+      "name": "03_arm_body_sway",
+      "source": {
+        "frames": 103,
+        "source_start_s": 24.9,
+        "invalid_landmark_samples": 0,
+        "observed_12_landmark_samples": 1236,
+        "source_type": "monocular estimated landmarks; filtered/interpolated where masked",
+        "third_clip_policy": "first 103 frames only, before close-view cut"
+      },
+      "frames": 432,
+      "dt": 0.02,
+      "duration_s": 8.620000000000001,
+      "source_mapping_window_s": [
+        24.9,
+        28.333333333333332
+      ],
+      "reference": "video/human_motion_01/v1/trajectories/03_arm_body_sway/reference.npz",
+      "detailed_trajectory": "video/human_motion_01/v1/mapping/03_arm_body_sway_robot_trajectory.npz",
+      "reference_type": "kinematic candidate, no learning and no dynamic rollout",
+      "max_joint_speed_rad_s": 4.499930390311802,
+      "min_joint_limit_margin_rad": 0.025000000000000355,
+      "max_foot_target_error_m": 0.02124598781362412,
+      "mean_foot_target_error_m": 0.0004358779539296873,
+      "min_target_near_ground_polygon_margin_m": 0.008718364472819333,
+      "polygon_margin_note": "geometric target-foot heuristic only, not a contact-based stability certificate",
+      "max_floor_penetration_m": 0.002167000694127551,
+      "max_self_penetration_m": 0.0,
+      "adaptation": "arm priority; front gait attenuated while gesturing; rear/middle lift capped 3.5mm; COM shifted into support polygon",
+      "training_format_conversion": {
+        "status": "passed",
+        "path": "video/human_motion_01/v1/trajectories/03_arm_body_sway/.cache/reference.motion.npz",
+        "note": "schema and kinematic checks only; not dynamic feasibility"
+      },
+      "full_reference_audit": {
+        "frames": 432,
+        "includes_lead_and_tail": true,
+        "max_floor_penetration_m": 0.0022715347940144934,
+        "max_self_penetration_m": 0.0,
+        "min_geometric_floor_contacts": 0,
+        "min_contact_polygon_margin_m": -0.017641548103593377,
+        "frames_without_nondegenerate_contact_polygon": 389,
+        "note": "contacts on prescribed poses; no contact-force or dynamic stability guarantee",
+        "worst_penetration_pairs": {
+          "LR_foot_tip_link_meshcol | mapping_floor": {
+            "penetration_m": 0.0022715347940144934,
+            "time_s": 7.66
+          },
+          "RM_foot_tip_link_meshcol | mapping_floor": {
+            "penetration_m": 0.0009848877893613491,
+            "time_s": 7.7
+          }
+        }
+      },
+      "preview": {
+        "video": "video/human_motion_01/v1/previews/03_arm_body_sway_robot_reference.mp4",
+        "contact_sheet": "video/human_motion_01/v1/previews/03_arm_body_sway_robot_reference.contact_sheet.png",
+        "trajectory_samples": 432,
+        "video_frames": 259,
+        "trajectory_duration_s": 8.620000000000001,
+        "video_fps": 30,
+        "preview_type": "Kinematic reference preview (no physics rollout)"
+      }
+    }
+  ]
+}

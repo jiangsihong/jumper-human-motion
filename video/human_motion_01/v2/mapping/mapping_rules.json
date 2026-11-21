@@ -1,0 +1,69 @@
+{
+  "schema": "jumper-human-retarget/2",
+  "settings": {
+    "version": 2,
+    "time_scale": 2.0,
+    "control_hz": 50,
+    "arms_only": [
+      "LF",
+      "RF"
+    ],
+    "feet_only": [
+      "LM",
+      "RM",
+      "LR",
+      "RR"
+    ],
+    "step_clearance_m": 0.045,
+    "sway_step_clearance_m": 0.055,
+    "right_rear_kick_x_range_m": [
+      -0.2,
+      -0.04
+    ],
+    "right_rear_kick_height_m": 0.06,
+    "right_rear_kick_outward_m": 0.02,
+    "max_joint_speed_rad_s": 12.0,
+    "time_scales": {
+      "01_side_step": 2.0,
+      "02_kick_step": 2.0,
+      "03_arm_body_sway": 2.5
+    },
+    "source_pose_note": "estimated monocular landmarks; kick depth adapted from reviewed phases",
+    "priority": "preserve expressive step/kick targets; report execution failures separately"
+  },
+  "mapping": [
+    {
+      "human": "left arm",
+      "robot": [
+        "LF"
+      ]
+    },
+    {
+      "human": "right arm",
+      "robot": [
+        "RF"
+      ]
+    },
+    {
+      "human": "left foot",
+      "robot": [
+        "LM",
+        "LR"
+      ]
+    },
+    {
+      "human": "right foot",
+      "robot": [
+        "RM",
+        "RR"
+      ]
+    }
+  ],
+  "adaptations": [
+    "one swinging leg at a time during crawl steps",
+    "RR is the principal right-leg kick because its joint workspace permits a much larger swing",
+    "body compensation moves the root, without suppressing the leg target",
+    "monocular depth is adapted from reviewed kick phases, not claimed as ground truth"
+  ],
+  "previous_version": "../v1/mapping and ../v1/previews are preserved"
+}

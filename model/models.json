@@ -1,0 +1,82 @@
+{
+  "layout_version": 1,
+  "models": [
+    {
+      "name": "side_step",
+      "task": "jumper.human_side_step",
+      "policy_version": "ppo_v1",
+      "checkpoint_file": "side_step/side_step.pt",
+      "source_checkpoint": "scripts/logs/jumper/jumper.human_side_step/2026-11-02_18-47-51/model_1999.pt",
+      "source_sha256": "ed5c24a76f71a36ebeb463028e46a6a1e5c45ffa975d30d9775d7a61c97cfe4c",
+      "iteration_index": 1999,
+      "completed_iterations": 2000,
+      "algorithm": "PPO",
+      "status": "trained candidate; not labeled best or hardware validated",
+      "contents": "Full original checkpoint; rename/copy only, optimizer and training state retained",
+      "validation": {
+        "cpu_checkpoint_load": "passed",
+        "all_saved_tensors_finite": true,
+        "tensor_count": 76,
+        "copy_sha256_match": true
+      }
+    },
+    {
+      "name": "kick_step",
+      "task": "jumper.human_kick_step",
+      "policy_version": "ppo_v1",
+      "checkpoint_file": "kick_step/kick_step.pt",
+      "source_checkpoint": "logs/jumper/jumper.human_kick_step/2026-11-02_19-20-30/model_1999.pt",
+      "source_sha256": "aef0cf0449554312ff005bb5b33ed33cbc552375c8551ebccdcbbf8ce25784eb",
+      "iteration_index": 1999,
+      "completed_iterations": 2000,
+      "algorithm": "PPO",
+      "status": "trained candidate; not labeled best or hardware validated",
+      "contents": "Full original checkpoint; rename/copy only, optimizer and training state retained",
+      "validation": {
+        "cpu_checkpoint_load": "passed",
+        "all_saved_tensors_finite": true,
+        "tensor_count": 76,
+        "copy_sha256_match": true
+      }
+    },
+    {
+      "name": "arm_body_sway",
+      "task": "jumper.human_arm_body_sway",
+      "policy_version": "ppo_v1",
+      "checkpoint_file": "arm_body_sway/arm_body_sway.pt",
+      "source_checkpoint": "logs/jumper/jumper.human_arm_body_sway/2026-11-02_19-36-00/model_1999.pt",
+      "source_sha256": "0dbfee25d3da5128a0db58149d861471c18d9675c1a632d01e24ce6fe6b962b4",
+      "iteration_index": 1999,
+      "completed_iterations": 2000,
+      "algorithm": "PPO",
+      "status": "trained candidate; not labeled best or hardware validated",
+      "contents": "Full original checkpoint; rename/copy only, optimizer and training state retained",
+      "validation": {
+        "cpu_checkpoint_load": "passed",
+        "all_saved_tensors_finite": true,
+        "tensor_count": 76,
+        "copy_sha256_match": true
+      },
+      "known_issue": "Existing trained policy does not reproduce the intended large front-arm motion; residual-control solution has not been implemented."
+    },
+    {
+      "name": "tripod_walk",
+      "task": "jumper.tripod",
+      "policy_version": "ppo_v1",
+      "checkpoint_file": "tripod_walk/tripod_walk.pt",
+      "source_checkpoint": "logs/jumper/jumper.tripod/2026-10-31_19-48-33/model_2849.pt",
+      "source_sha256": "99186af28c4900611230260eac14306642ebb8ccf3284c442372d79a8b1a4c70",
+      "iteration_index": 2849,
+      "completed_iterations": 2850,
+      "algorithm": "PPO",
+      "status": "trained candidate; not labeled best or hardware validated",
+      "contents": "Full original checkpoint; rename/copy only, optimizer and training state retained",
+      "validation": {
+        "cpu_checkpoint_load": "passed",
+        "all_saved_tensors_finite": true,
+        "tensor_count": 92,
+        "copy_sha256_match": true
+      }
+    }
+  ]
+}

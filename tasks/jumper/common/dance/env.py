@@ -60,6 +60,7 @@ from ..constants import (
 from ..mdp.observations import actuator_force
 from ..tof import tof_sensor
 from .motion import ensure_motion_npz
+from .support import SupportSchedule
 from .observations import (
     FUTURE_HORIZONS,
     clip_phase,
@@ -95,7 +96,10 @@ TRACKED_BODIES: tuple[str, ...] = ("base_link",) + FEET
 #: The four legs that stay on the ground, as body names. `SUPPORT_LEGS` in
 #: `motion.py` is the same four by leg prefix.
 SUPPORT_FEET: tuple[str, ...] = (
-    "LM_foot_tip_link", "RM_foot_tip_link", "LR_foot_tip_link", "RR_foot_tip_link",
+    "LM_foot_tip_link",
+    "RM_foot_tip_link",
+    "LR_foot_tip_link",
+    "RR_foot_tip_link",
 )
 
 
@@ -126,6 +130,7 @@ def dance_env_cfg(
     support_foot_error: float,
     push_interval_s: tuple[float, float],
     push_velocity_range: dict[str, tuple[float, float]],
+    support_schedule: SupportSchedule | None = None,
 ) -> ManagerBasedRlEnvCfg:
     """Build a dance task's environment config.
 
@@ -210,7 +215,9 @@ def dance_env_cfg(
 
     motion_cmd = cfg.commands[COMMAND]
     assert isinstance(motion_cmd, MotionCommandCfg)
-    motion_cmd.motion_file = str(ensure_motion_npz(control_dt, media, asset=asset))
+    motion_cmd.motion_file = str(
+        ensure_motion_npz(control_dt, media, asset=asset, support_schedule=support_schedule)
+    )
     motion_cmd.anchor_body_name = "base_link"
     motion_cmd.body_names = TRACKED_BODIES
     motion_cmd.pose_range = dict(rsi_pose_range)
@@ -229,15 +236,9 @@ def dance_env_cfg(
     # future horizons, so history would mostly repeat what `ref_future` states
     # exactly.
     _clip_terms = {
-        "clip_phase": ObservationTermCfg(
-            func=clip_phase, params={"command_name": COMMAND}
-        ),
-        "ref_joint_pos": ObservationTermCfg(
-            func=ref_joint_pos, params={"command_name": COMMAND}
-        ),
-        "ref_joint_vel": ObservationTermCfg(
-            func=ref_joint_vel, params={"command_name": COMMAND}
-        ),
+        "clip_phase": ObservationTermCfg(func=clip_phase, params={"command_name": COMMAND}),
+        "ref_joint_pos": ObservationTermCfg(func=ref_joint_pos, params={"command_name": COMMAND}),
+        "ref_joint_vel": ObservationTermCfg(func=ref_joint_vel, params={"command_name": COMMAND}),
         "ref_future": ObservationTermCfg(
             func=ref_future,
             params={"command_name": COMMAND, "horizons": FUTURE_HORIZONS},
@@ -246,9 +247,7 @@ def dance_env_cfg(
         # six-axis IMU for the yaw half. `observations.py` has the measurements --
         # the crab dance's root travels 0.148 m across the clip, and the 22.3 deg of
         # yaw it uses is the same order as the drift would be.
-        "ref_tilt_error": ObservationTermCfg(
-            func=ref_tilt_error, params={"command_name": COMMAND}
-        ),
+        "ref_tilt_error": ObservationTermCfg(func=ref_tilt_error, params={"command_name": COMMAND}),
     }
 
     def _proprioception(noisy: bool) -> dict[str, ObservationTermCfg]:
@@ -289,7 +288,8 @@ def dance_env_cfg(
                 func=actuator_force,
                 noise=(
                     Unoise(n_min=-ACTUATOR_FORCE_NOISE, n_max=ACTUATOR_FORCE_NOISE)
-                    if noisy else None
+                    if noisy
+                    else None
                 ),
             ),
         }
@@ -347,9 +347,7 @@ def dance_env_cfg(
     cfg.rewards["action_rate_l2"] = RewardTermCfg(
         func=mdp.action_rate_l2, weight=action_rate_weight
     )
-    cfg.rewards["action_acc_l2"] = RewardTermCfg(
-        func=mdp.action_acc_l2, weight=action_acc_weight
-    )
+    cfg.rewards["action_acc_l2"] = RewardTermCfg(func=mdp.action_acc_l2, weight=action_acc_weight)
     # `actuator_power_cost`, not mjlab's `electrical_power_cost`: that one reads
     # `qfrc_actuator`, which the native backend does not provide. See the docstring
     # in `rewards.py` -- it is the same seam trap as `nan_detection` below.

@@ -1,0 +1,30 @@
+{
+  "task": "jumper.human_kick_step",
+  "reference_source": "video/human_motion_01/v2/trajectories/02_kick_step/reference.npz",
+  "reference_sha256": "4aec61bf80a2205c07860519c731c82e0879cdf02cb77851e96623f6f6eeafd4",
+  "reference_modified": false,
+  "backend": "warp:cuda:0",
+  "gpu": "RTX 5060 Laptop GPU 8 GiB",
+  "num_envs": 256,
+  "iterations": 5,
+  "mean_reward_first_last": [
+    0.18,
+    0.15
+  ],
+  "checkpoint": "logs/jumper/jumper.human_kick_step/2026-11-02_19-12-08/model_4.pt",
+  "result": "startup checks only; the policy has not learned the performance",
+  "tests": "51 passed, 1 skipped; three support checks repeated after terminology update",
+  "support_validation": "near-ground geometry labels, not proof of contact forces or stability",
+  "formal_training_started": false,
+  "replay": {
+    "backend": "warp:cuda:0",
+    "num_envs": 1,
+    "observation_noise": true,
+    "requested_steps": 456,
+    "completed_steps": 186,
+    "measurement_rows": 185,
+    "simulated_seconds": 3.72,
+    "measure_directory": "logs/jumper/jumper.human_kick_step/2026-11-02_19-12-08/measure",
+    "result": "early ending; not learned after five startup iterations"
+  }
+}

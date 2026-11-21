@@ -1,0 +1,71 @@
+{
+  "schema": "jumper-human-retarget/1",
+  "parameters": {
+    "control_hz": 50,
+    "source_fps": 30,
+    "playback_time_scale": 1.8,
+    "lead_in_s": 1.0,
+    "lead_out_s": 1.0,
+    "final_hold_s": 0.5,
+    "visibility_threshold": 0.5,
+    "smoothing_window_frames": 7,
+    "max_body_roll_rad": 0.12,
+    "max_body_pitch_rad": 0.1,
+    "max_body_yaw_rad": 0.1,
+    "max_body_lateral_m": 0.022,
+    "support_backshift_m": 0.06,
+    "max_front_lift_m": 0.15,
+    "max_front_outward_m": 0.045,
+    "max_leg_lift_m": 0.0035,
+    "max_leg_lateral_m": 0.009,
+    "support_margin_m": 0.009,
+    "joint_limit_margin_rad": 0.025,
+    "ik_target_tolerance_m": 0.0015,
+    "max_joint_speed_rad_s": 4.5,
+    "front_elbow_clearance_x_m": 0.065
+  },
+  "human_sides": "MediaPipe anatomical left/right; no mirroring based on screen position",
+  "mapping": [
+    {
+      "human": "left shoulder/elbow/wrist",
+      "robot": "LF_J0..J3",
+      "method": "left front endpoint IK"
+    },
+    {
+      "human": "right shoulder/elbow/wrist",
+      "robot": "RF_J0..J3",
+      "method": "right front endpoint IK"
+    },
+    {
+      "human": "left hip/knee/ankle",
+      "robot": [
+        "LF",
+        "LM",
+        "LR"
+      ],
+      "method": "adapted left step features; rear phase delay; front-arm priority"
+    },
+    {
+      "human": "right hip/knee/ankle",
+      "robot": [
+        "RF",
+        "RM",
+        "RR"
+      ],
+      "method": "adapted right step features; rear phase delay; front-arm priority"
+    },
+    {
+      "human": "shoulder/hip centers",
+      "robot": "free base",
+      "method": "scaled torso roll/pitch/yaw and lateral shift plus robot-specific support correction"
+    }
+  ],
+  "grippers": "LF_J4 and RF_J4 held at HOME=0; no human finger mapping",
+  "limitations": [
+    "monocular 3D estimates are ambiguous",
+    "human two-leg motion is adapted, not copied into six independent measured legs",
+    "third clip maps only the 103-frame full-body prefix",
+    "kinematic preview is not proof of physically executable control",
+    "no policy trained"
+  ]
+}

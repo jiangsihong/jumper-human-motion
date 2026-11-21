@@ -1,0 +1,55 @@
+{
+  "name": "03_arm_body_sway",
+  "source": {
+    "frames": 103,
+    "source_start_s": 24.9,
+    "invalid_landmark_samples": 0,
+    "observed_12_landmark_samples": 1236,
+    "source_type": "monocular estimated landmarks; filtered/interpolated where masked",
+    "third_clip_policy": "first 103 frames only, before close-view cut"
+  },
+  "frames": 432,
+  "dt": 0.02,
+  "duration_s": 8.620000000000001,
+  "source_mapping_window_s": [
+    24.9,
+    28.333333333333332
+  ],
+  "reference": "video/human_motion_01/v1/trajectories/03_arm_body_sway/reference.npz",
+  "detailed_trajectory": "video/human_motion_01/v1/mapping/03_arm_body_sway_robot_trajectory.npz",
+  "reference_type": "kinematic candidate, no learning and no dynamic rollout",
+  "max_joint_speed_rad_s": 4.499930390311802,
+  "min_joint_limit_margin_rad": 0.025000000000000355,
+  "max_foot_target_error_m": 0.02124598781362412,
+  "mean_foot_target_error_m": 0.0004358779539296873,
+  "min_target_near_ground_polygon_margin_m": 0.008718364472819333,
+  "polygon_margin_note": "geometric target-foot heuristic only, not a contact-based stability certificate",
+  "max_floor_penetration_m": 0.002167000694127551,
+  "max_self_penetration_m": 0.0,
+  "adaptation": "arm priority; front gait attenuated while gesturing; rear/middle lift capped 3.5mm; COM shifted into support polygon",
+  "training_format_conversion": {
+    "status": "passed",
+    "path": "video/human_motion_01/v1/trajectories/03_arm_body_sway/.cache/reference.motion.npz",
+    "note": "schema and kinematic checks only; not dynamic feasibility"
+  },
+  "full_reference_audit": {
+    "frames": 432,
+    "includes_lead_and_tail": true,
+    "max_floor_penetration_m": 0.0022715347940144934,
+    "max_self_penetration_m": 0.0,
+    "min_geometric_floor_contacts": 0,
+    "min_contact_polygon_margin_m": -0.017641548103593377,
+    "frames_without_nondegenerate_contact_polygon": 389,
+    "note": "contacts on prescribed poses; no contact-force or dynamic stability guarantee",
+    "worst_penetration_pairs": {
+      "LR_foot_tip_link_meshcol | mapping_floor": {
+        "penetration_m": 0.0022715347940144934,
+        "time_s": 7.66
+      },
+      "RM_foot_tip_link_meshcol | mapping_floor": {
+        "penetration_m": 0.0009848877893613491,
+        "time_s": 7.7
+      }
+    }
+  }
+}

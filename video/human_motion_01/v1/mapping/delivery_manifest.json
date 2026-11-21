@@ -1,0 +1,32 @@
+{
+  "status": "completed mapping and bounded preview checks; no RL training",
+  "source_sha256": "859244229e8e4e4fc8576fcf0949f2a51c490c4b64add61d2cb8d4a3aeb3c785",
+  "source_unchanged": true,
+  "robot_xml_sha256": "3342ca15a5bbcaf40e1f16dedb60044b91360dddae5f7f03f05eb3e6c830cf37",
+  "model": "canonical Jumper with extra floor and simple torque-limited position actuators in preview only",
+  "training_started": false,
+  "training_task_registered": false,
+  "primary_reference": "trajectories/<motion>/reference.npz; measured channels from free-base PD physics",
+  "kinematic_stage_report": "mapping/validation_report.json (before physical refinement)",
+  "physics_stage_report": "mapping/physics_probe.json",
+  "checks": [
+    {
+      "name": "01_side_step",
+      "samples": 708,
+      "reference_sha256": "4f57cc5b6556a1993d25af5979f6b6e7078944050ef0cc364e0d9f2fe62493a4",
+      "checks": "planned/measured channels match separate trajectories; joint order and timebase agree; converted arrays finite and full-length"
+    },
+    {
+      "name": "02_kick_step",
+      "samples": 492,
+      "reference_sha256": "68b04bc5c425f987fd019015b186f7fe1b99a16f0a088755844f6a5d90fc5e0c",
+      "checks": "planned/measured channels match separate trajectories; joint order and timebase agree; converted arrays finite and full-length"
+    },
+    {
+      "name": "03_arm_body_sway",
+      "samples": 432,
+      "reference_sha256": "8cd107b5024d0de7f5d55e7a82e05554630a18bc767a7f64355f16526237568d",
+      "checks": "planned/measured channels match separate trajectories; joint order and timebase agree; converted arrays finite and full-length"
+    }
+  ]
+}

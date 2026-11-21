@@ -1,0 +1,51 @@
+{
+  "version": 2,
+  "status": "expressive mappings and bounded physical previews completed",
+  "source_unchanged": true,
+  "training_started": false,
+  "registered_training_task": false,
+  "mapping": "hands to LF/RF only; feet to LM/LR and RM/RR only; shared root balance compensation",
+  "method": "video features with manually adapted four-leg contact timing and reviewed right-kick phases",
+  "motion_acceptance": {
+    "side_step_body_y_over_60mm": true,
+    "all_walking_feet_lift_over_25mm": true,
+    "right_kick_x_over_130mm": true,
+    "right_kick_lift_over_50mm": true,
+    "no_fall_in_bounded_PD_probes": true
+  },
+  "validation_scope": "Not exact human-motion reconstruction, robust policy validation, or hardware validation",
+  "references": [
+    {
+      "name": "01_side_step",
+      "reference": "video/human_motion_01/v2/trajectories/01_side_step/reference.npz",
+      "sha256": "a1d3c35a4257264d6fa200022e591fee303481c0d351e1d038c6ae0f25b55dfe",
+      "source_schema_read": "passed",
+      "fixed_support_dance_compatibility": {
+        "status": "passed",
+        "path": "video/human_motion_01/v2/trajectories/01_side_step/.cache/reference.motion.npz"
+      }
+    },
+    {
+      "name": "02_kick_step",
+      "reference": "video/human_motion_01/v2/trajectories/02_kick_step/reference.npz",
+      "sha256": "4aec61bf80a2205c07860519c731c82e0879cdf02cb77851e96623f6f6eeafd4",
+      "source_schema_read": "passed",
+      "fixed_support_dance_compatibility": {
+        "status": "requires_a_task_with_scheduled_contacts",
+        "reason": "the reference does not describe a posture the robot can stand in: forward kinematics puts the four support feet 6.7 mm out of plane on the median frame (tolerance 5 mm).\nREFERENCE is 'measured'. The commanded channels are PD *targets* and are expected to fail this -- nothing ever required forward kinematics on them to close. Use 'measured', or check that the base pose and the joint angles come from the same take.",
+        "note": "The existing dance converter assumes all four legs stay grounded; stepping and kicking intentionally violate that assumption."
+      }
+    },
+    {
+      "name": "03_arm_body_sway",
+      "reference": "video/human_motion_01/v2/trajectories/03_arm_body_sway/reference.npz",
+      "sha256": "4175f269fd5836a2f43a729826114ccf45c358ce51b57bd1c32f010ff454db9f",
+      "source_schema_read": "passed",
+      "fixed_support_dance_compatibility": {
+        "status": "requires_a_task_with_scheduled_contacts",
+        "reason": "the reference does not describe a posture the robot can stand in: forward kinematics puts the four support feet 5.8 mm out of plane on the median frame (tolerance 5 mm).\nREFERENCE is 'measured'. The commanded channels are PD *targets* and are expected to fail this -- nothing ever required forward kinematics on them to close. Use 'measured', or check that the base pose and the joint angles come from the same take.",
+        "note": "The existing dance converter assumes all four legs stay grounded; stepping and kicking intentionally violate that assumption."
+      }
+    }
+  ]
+}

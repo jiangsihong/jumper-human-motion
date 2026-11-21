@@ -1,0 +1,390 @@
+[
+  {
+    "name": "01_side_step",
+    "version": 2,
+    "training_started": false,
+    "samples": 698,
+    "duration_s": 13.94,
+    "primary_reference_type": "expressive kinematic candidate, not overwritten by PD playback",
+    "leg_mapping": "hands LF/RF only; feet LM/RM/LR/RR only",
+    "foot_world_excursion_m": {
+      "LF": {
+        "x": 0.023309457759226826,
+        "y": 0.13750207009032173,
+        "z": 0.07317093113396621
+      },
+      "RF": {
+        "x": 0.027271621594831902,
+        "y": 0.13847445726597296,
+        "z": 0.03931530480935331
+      },
+      "LM": {
+        "x": 0.06940561371448786,
+        "y": 0.13835793047850312,
+        "z": 0.04579270069093354
+      },
+      "RM": {
+        "x": 0.07190511130850977,
+        "y": 0.08918732431874221,
+        "z": 0.04573839886533129
+      },
+      "LR": {
+        "x": 0.009257150222525254,
+        "y": 0.14613173836344096,
+        "z": 0.045800802013853316
+      },
+      "RR": {
+        "x": 0.014892076110940372,
+        "y": 0.12464605217801289,
+        "z": 0.04701379925440162
+      }
+    },
+    "body_world_excursion_m": [
+      0.016000000000000007,
+      0.125858703512103,
+      0.004462121028824664
+    ],
+    "peak_joint_speed_rad_s": 12.0,
+    "min_joint_limit_margin_rad": 0.025000000000000355,
+    "ik_max_error_m": 0.05761480013330924,
+    "ik_mean_error_m": 0.00024206061911000862,
+    "geometry": {
+      "max_floor_overlap_m": 0.003127297232259173,
+      "max_self_overlap_m": 0.004053301246360164,
+      "contacts_over_3mm": [
+        [
+          2.2600000000000002,
+          "RM_calf_link_meshcol",
+          "RR_calf_link_meshcol",
+          -0.004053301246360164
+        ]
+      ],
+      "note": "prescribed geometry audit; not a dynamic stability certificate"
+    },
+    "format_load_check": "passed",
+    "fixed_support_dance_conversion": {
+      "status": "not_compatible_with_fixed_four_support_dance_check",
+      "reason": "the reference does not describe a posture the robot can stand in: forward kinematics puts the four support feet 11.7 mm out of plane on the median frame (tolerance 5 mm).\nREFERENCE is 'measured'. The commanded channels are PD *targets* and are expected to fail this -- nothing ever required forward kinematics on them to close. Use 'measured', or check that the base pose and the joint angles come from the same take.",
+      "note": "Do not lower kick/step amplitude to satisfy an all-four-feet-grounded dance assumption; future task needs scheduled contacts."
+    },
+    "source_interval_s": [
+      2.8,
+      9.3
+    ],
+    "step_events": [
+      [
+        0.22,
+        0.54,
+        2,
+        0.045
+      ],
+      [
+        0.54,
+        0.86,
+        5,
+        0.045
+      ],
+      [
+        0.86,
+        1.18,
+        3,
+        0.045
+      ],
+      [
+        1.18,
+        1.5,
+        4,
+        0.045
+      ],
+      [
+        1.9,
+        2.1875,
+        3,
+        0.045
+      ],
+      [
+        2.1875,
+        2.4749999999999996,
+        4,
+        0.045
+      ],
+      [
+        2.4749999999999996,
+        2.7624999999999997,
+        2,
+        0.045
+      ],
+      [
+        2.7624999999999997,
+        3.05,
+        5,
+        0.045
+      ],
+      [
+        3.45,
+        3.7875,
+        2,
+        0.045
+      ],
+      [
+        3.7875,
+        4.125,
+        5,
+        0.045
+      ],
+      [
+        4.125,
+        4.4625,
+        3,
+        0.045
+      ],
+      [
+        4.4625,
+        4.8,
+        4,
+        0.045
+      ],
+      [
+        5.1,
+        5.441666666666666,
+        3,
+        0.045
+      ],
+      [
+        5.441666666666666,
+        5.783333333333333,
+        4,
+        0.045
+      ],
+      [
+        5.783333333333333,
+        6.125,
+        2,
+        0.045
+      ],
+      [
+        6.125,
+        6.466666666666667,
+        5,
+        0.045
+      ]
+    ],
+    "kick_note": null
+  },
+  {
+    "name": "02_kick_step",
+    "version": 2,
+    "training_started": false,
+    "samples": 458,
+    "duration_s": 9.14,
+    "primary_reference_type": "expressive kinematic candidate, not overwritten by PD playback",
+    "leg_mapping": "hands LF/RF only; feet LM/RM/LR/RR only",
+    "foot_world_excursion_m": {
+      "LF": {
+        "x": 0.02777760291501108,
+        "y": 0.0651573320352732,
+        "z": 0.13685496780501194
+      },
+      "RF": {
+        "x": 0.023568099566755485,
+        "y": 0.05613015815135827,
+        "z": 0.12982912448548223
+      },
+      "LM": {
+        "x": 1.0061325467489342e-05,
+        "y": 1.63056880052026e-05,
+        "z": 2.052011647380933e-05
+      },
+      "RM": {
+        "x": 0.051223790656297924,
+        "y": 0.021860793843849896,
+        "z": 0.04071743350050909
+      },
+      "LR": {
+        "x": 8.289624988791489e-06,
+        "y": 2.3169115023535802e-05,
+        "z": 2.2753656438277356e-05
+      },
+      "RR": {
+        "x": 0.1599843659005061,
+        "y": 0.021602910559047117,
+        "z": 0.06063058932919808
+      }
+    },
+    "body_world_excursion_m": [
+      0.016000000000000007,
+      0.017185737600370826,
+      0.008640906624597336
+    ],
+    "peak_joint_speed_rad_s": 11.999999999999998,
+    "min_joint_limit_margin_rad": 0.1,
+    "ik_max_error_m": 0.04378875931459033,
+    "ik_mean_error_m": 3.9064228380921844e-05,
+    "geometry": {
+      "max_floor_overlap_m": 0.0004330007650564377,
+      "max_self_overlap_m": 0.0,
+      "contacts_over_3mm": [],
+      "note": "prescribed geometry audit; not a dynamic stability certificate"
+    },
+    "format_load_check": "passed",
+    "fixed_support_dance_conversion": {
+      "status": "not_compatible_with_fixed_four_support_dance_check",
+      "reason": "the reference does not describe a posture the robot can stand in: forward kinematics puts the four support feet 15.0 mm out of plane on the median frame (tolerance 5 mm).\nREFERENCE is 'measured'. The commanded channels are PD *targets* and are expected to fail this -- nothing ever required forward kinematics on them to close. Use 'measured', or check that the base pose and the joint angles come from the same take.",
+      "note": "Do not lower kick/step amplitude to satisfy an all-four-feet-grounded dance assumption; future task needs scheduled contacts."
+    },
+    "source_interval_s": [
+      12.4,
+      16.5
+    ],
+    "step_events": [
+      [
+        0.4,
+        1.02,
+        3,
+        0.04
+      ]
+    ],
+    "kick_note": "right foot RR: retract outward/back, swing forward, return"
+  },
+  {
+    "name": "03_arm_body_sway",
+    "version": 2,
+    "training_started": false,
+    "samples": 476,
+    "duration_s": 9.5,
+    "primary_reference_type": "expressive kinematic candidate, not overwritten by PD playback",
+    "leg_mapping": "hands LF/RF only; feet LM/RM/LR/RR only",
+    "foot_world_excursion_m": {
+      "LF": {
+        "x": 0.08069880886665372,
+        "y": 0.14291668102616933,
+        "z": 0.23682185424959537
+      },
+      "RF": {
+        "x": 0.0684212812827629,
+        "y": 0.1641102215881957,
+        "z": 0.2179265116993999
+      },
+      "LM": {
+        "x": 0.06490804176141864,
+        "y": 0.08759745948255132,
+        "z": 0.0572927331508004
+      },
+      "RM": {
+        "x": 0.07263048432438866,
+        "y": 0.1423085197424673,
+        "z": 0.05510974233918585
+      },
+      "LR": {
+        "x": 0.020537687925223383,
+        "y": 0.10540925573418297,
+        "z": 0.055151835716641694
+      },
+      "RR": {
+        "x": 0.031873407192394926,
+        "y": 0.13324332438497707,
+        "z": 0.055684746956860987
+      }
+    },
+    "body_world_excursion_m": [
+      0.01794674251574907,
+      0.08970598772353655,
+      0.0006878928586456362
+    ],
+    "peak_joint_speed_rad_s": 11.999999999999998,
+    "min_joint_limit_margin_rad": 0.025000000000000133,
+    "ik_max_error_m": 0.10462253901862646,
+    "ik_mean_error_m": 0.004487002002421094,
+    "geometry": {
+      "max_floor_overlap_m": 0.0032181630635674374,
+      "max_self_overlap_m": 0.0,
+      "contacts_over_3mm": [],
+      "note": "prescribed geometry audit; not a dynamic stability certificate"
+    },
+    "format_load_check": "passed",
+    "fixed_support_dance_conversion": {
+      "status": "not_compatible_with_fixed_four_support_dance_check",
+      "reason": "the reference does not describe a posture the robot can stand in: forward kinematics puts the four support feet 22.0 mm out of plane on the median frame (tolerance 5 mm).\nREFERENCE is 'measured'. The commanded channels are PD *targets* and are expected to fail this -- nothing ever required forward kinematics on them to close. Use 'measured', or check that the base pose and the joint angles come from the same take.",
+      "note": "Do not lower kick/step amplitude to satisfy an all-four-feet-grounded dance assumption; future task needs scheduled contacts."
+    },
+    "source_interval_s": [
+      24.9,
+      28.333333333333332
+    ],
+    "step_events": [
+      [
+        0.18,
+        0.41500000000000004,
+        2,
+        0.055
+      ],
+      [
+        0.41500000000000004,
+        0.6500000000000001,
+        5,
+        0.055
+      ],
+      [
+        0.6500000000000001,
+        0.885,
+        3,
+        0.055
+      ],
+      [
+        0.885,
+        1.12,
+        4,
+        0.055
+      ],
+      [
+        1.15,
+        1.3925,
+        3,
+        0.055
+      ],
+      [
+        1.3925,
+        1.635,
+        4,
+        0.055
+      ],
+      [
+        1.635,
+        1.8775,
+        2,
+        0.055
+      ],
+      [
+        1.8775,
+        2.12,
+        5,
+        0.055
+      ],
+      [
+        2.15,
+        2.3674999999999997,
+        2,
+        0.055
+      ],
+      [
+        2.3674999999999997,
+        2.585,
+        5,
+        0.055
+      ],
+      [
+        2.585,
+        2.8025,
+        3,
+        0.055
+      ],
+      [
+        2.8025,
+        3.02,
+        4,
+        0.055
+      ]
+    ],
+    "kick_note": null
+  }
+]

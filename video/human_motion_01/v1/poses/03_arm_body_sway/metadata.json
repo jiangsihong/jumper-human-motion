@@ -1,0 +1,14 @@
+{
+  "clip": "03_arm_body_sway",
+  "source": "clips/03_arm_body_sway.mp4",
+  "frames": 222,
+  "detected_frames": 222,
+  "observed_landmark_mean_visibility": 0.917417049407959,
+  "frame_fraction_all_12_landmarks_visible": 0.7162162162162162,
+  "method": "MediaPipe Pose Landmarker VIDEO, 33 landmarks; not motion capture ground truth",
+  "image_coordinates": "normalized x-right y-down; z is model-estimated depth",
+  "world_coordinates": "model-estimated hip-centered metric coordinates; monocular ambiguity remains",
+  "model_url": "https://storage.googleapis.com/mediapipe-models/pose_landmarker/pose_landmarker_full/float16/latest/pose_landmarker_full.task",
+  "model_sha256": "4eaa5eb7a98365221087693fcc286334cf0858e2eb6e15b506aa4a7ecdcec4ad",
+  "mediapipe_version": "1.2.0"
+}

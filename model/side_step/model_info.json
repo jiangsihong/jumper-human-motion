@@ -1,0 +1,19 @@
+{
+  "name": "side_step",
+  "task": "jumper.human_side_step",
+  "policy_version": "ppo_v1",
+  "checkpoint_file": "side_step/side_step.pt",
+  "source_checkpoint": "scripts/logs/jumper/jumper.human_side_step/2026-11-02_18-47-51/model_1999.pt",
+  "source_sha256": "ed5c24a76f71a36ebeb463028e46a6a1e5c45ffa975d30d9775d7a61c97cfe4c",
+  "iteration_index": 1999,
+  "completed_iterations": 2000,
+  "algorithm": "PPO",
+  "status": "trained candidate; not labeled best or hardware validated",
+  "contents": "Full original checkpoint; rename/copy only, optimizer and training state retained",
+  "validation": {
+    "cpu_checkpoint_load": "passed",
+    "all_saved_tensors_finite": true,
+    "tensor_count": 76,
+    "copy_sha256_match": true
+  }
+}

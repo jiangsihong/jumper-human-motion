@@ -134,6 +134,8 @@ from __future__ import annotations
 import hashlib
 import json
 from dataclasses import dataclass
+
+from .support import SupportSchedule
 from pathlib import Path
 
 import numpy as np
@@ -176,20 +178,19 @@ SUPPORT_LEGS: tuple[str, ...] = ("LM", "RM", "LR", "RR")
 #: front arms are `L0` and `L5`; the four 3-DoF legs run round the body in
 #: between, which is why `L2` is the *left* rear and `L3` the *right* rear.
 LEG_JOINTS: dict[int, tuple[str, ...]] = {
-    0: ("LF_J0_joint", "LF_J1_joint", "LF_J2_joint",
-        "LF_J3_joint", "LF_J4_joint"),
+    0: ("LF_J0_joint", "LF_J1_joint", "LF_J2_joint", "LF_J3_joint", "LF_J4_joint"),
     1: ("LM_J0_joint", "LM_J1_joint", "LM_J2_joint"),
     2: ("LR_J0_joint", "LR_J1_joint", "LR_J2_joint"),
     3: ("RR_J0_joint", "RR_J1_joint", "RR_J2_joint"),
     4: ("RM_J0_joint", "RM_J1_joint", "RM_J2_joint"),
-    5: ("RF_J0_joint", "RF_J1_joint", "RF_J2_joint",
-        "RF_J3_joint", "RF_J4_joint"),
+    5: ("RF_J0_joint", "RF_J1_joint", "RF_J2_joint", "RF_J3_joint", "RF_J4_joint"),
 }
 
 #: The source's flat channel order, as joint names: leg 0's joints, then leg 1's...
 SOURCE_JOINT_ORDER: tuple[str, ...] = tuple(
     name for leg in sorted(LEG_JOINTS) for name in LEG_JOINTS[leg]
 )
+
 
 def _max_reference_speed() -> float:
     """Fastest a reference joint may move between two control steps, in rad/s: the
@@ -243,6 +244,7 @@ def _check_continuity(joint_pos: np.ndarray, target_dt: float, source: Path) -> 
             f"likely a dropped frame or two takes concatenated -- a step the policy "
             f"would be scored against and could not track."
         )
+
 
 #: How far outside its limits a reference joint may sit, in radians.
 #:
@@ -338,10 +340,7 @@ def _one_file(directory: Path, suffixes: tuple[str, ...], what: str) -> Path:
             f"{directory} does not exist. A dance task needs material there: see "
             f"tasks/jumper/dance/media/README.md for what goes in it."
         )
-    hits = sorted(
-        p for p in directory.iterdir()
-        if p.is_file() and p.suffix.lower() in suffixes
-    )
+    hits = sorted(p for p in directory.iterdir() if p.is_file() and p.suffix.lower() in suffixes)
     listing = ", ".join(suffixes)
     if not hits:
         present = sorted(p.name for p in directory.iterdir() if p.is_file())
@@ -359,9 +358,7 @@ def _one_file(directory: Path, suffixes: tuple[str, ...], what: str) -> Path:
     return hits[0]
 
 
-def _optional_one_file(
-    directory: Path, suffixes: tuple[str, ...], what: str
-) -> Path | None:
+def _optional_one_file(directory: Path, suffixes: tuple[str, ...], what: str) -> Path | None:
     """Like `_one_file`, but "not there" is an answer rather than an error.
 
     Ambiguity still raises. Absent and ambiguous are genuinely different: this
@@ -371,10 +368,7 @@ def _optional_one_file(
     """
     if not directory.is_dir():
         return None
-    hits = sorted(
-        p for p in directory.iterdir()
-        if p.is_file() and p.suffix.lower() in suffixes
-    )
+    hits = sorted(p for p in directory.iterdir() if p.is_file() and p.suffix.lower() in suffixes)
     if not hits:
         return None
     if len(hits) > 1:
@@ -419,9 +413,11 @@ def load_source(path: Path, reference: str | None = None) -> SourceClip:
         keys = set(data.files)
         wanted = (
             [f"{prefix}body_{a}" for a in ("x", "y", "z", "roll", "pitch", "yaw")]
-            + [f"{prefix}L{leg}_j{j}"
-               for leg in sorted(LEG_JOINTS)
-               for j in range(len(LEG_JOINTS[leg]))]
+            + [
+                f"{prefix}L{leg}_j{j}"
+                for leg in sorted(LEG_JOINTS)
+                for j in range(len(LEG_JOINTS[leg]))
+            ]
             + ["dt"]
         )
         missing = [k for k in wanted if k not in keys]
@@ -443,12 +439,8 @@ def load_source(path: Path, reference: str | None = None) -> SourceClip:
     if not 0.0 < dt < 1.0:
         raise ValueError(f"{path.name}: dt={dt} is not a plausible timestep")
 
-    root_pos = np.stack(
-        [get[f"{prefix}body_{a}"] for a in ("x", "y", "z")], axis=1
-    )
-    root_rpy = np.stack(
-        [get[f"{prefix}body_{a}"] for a in ("roll", "pitch", "yaw")], axis=1
-    )
+    root_pos = np.stack([get[f"{prefix}body_{a}"] for a in ("x", "y", "z")], axis=1)
+    root_rpy = np.stack([get[f"{prefix}body_{a}"] for a in ("roll", "pitch", "yaw")], axis=1)
 
     # The remap. Built name -> column from the source's own flat order, then read
     # out in the entity's order by the caller of `_entity_joint_names`.
@@ -542,9 +534,7 @@ def _resample(clip: SourceClip, target_dt: float) -> tuple[np.ndarray, ...]:
     t_out = np.arange(n_out) * target_dt
 
     def lerp(a: np.ndarray) -> np.ndarray:
-        return np.stack(
-            [np.interp(t_out, t_src, a[:, c]) for c in range(a.shape[1])], axis=1
-        )
+        return np.stack([np.interp(t_out, t_src, a[:, c]) for c in range(a.shape[1])], axis=1)
 
     return lerp(clip.joint_pos), lerp(clip.root_pos), lerp(clip.root_rpy)
 
@@ -554,10 +544,7 @@ def _entity_body_names(model) -> list[str]:
     `Entity.body_names` is and therefore what `MotionLoader` indexes into."""
     import mujoco
 
-    names = [
-        mujoco.mj_id2name(model, mujoco.mjtObj.mjOBJ_BODY, i)
-        for i in range(model.nbody)
-    ]
+    names = [mujoco.mj_id2name(model, mujoco.mjtObj.mjOBJ_BODY, i) for i in range(model.nbody)]
     if names[0] != "world":
         raise RuntimeError(
             f"body 0 is {names[0]!r}, not 'world'; the entity-body offset this "
@@ -687,7 +674,10 @@ def audio_duration_s(path: Path) -> float | None:
         # non-zero; that is the intended use here, so `check=False`.
         out = subprocess.run(
             [exe, "-hide_banner", "-i", str(path)],
-            capture_output=True, text=True, timeout=60, check=False,
+            capture_output=True,
+            text=True,
+            timeout=60,
+            check=False,
         ).stderr
     except (ImportError, OSError, RuntimeError, subprocess.SubprocessError):
         # ImportError / RuntimeError cover imageio-ffmpeg being absent or unable
@@ -779,9 +769,14 @@ def _model_digest(model) -> str:
     for name in _entity_joint_names():
         h.update(f"{name}\0".encode())
     for arr in (
-        model.body_parentid, model.body_pos, model.body_quat,
-        model.jnt_type, model.jnt_bodyid, model.jnt_qposadr,
-        model.jnt_axis, model.jnt_pos,
+        model.body_parentid,
+        model.body_pos,
+        model.body_quat,
+        model.jnt_type,
+        model.jnt_bodyid,
+        model.jnt_qposadr,
+        model.jnt_axis,
+        model.jnt_pos,
     ):
         a = np.ascontiguousarray(arr)
         h.update(f"|{a.dtype.str}|{a.shape}|".encode())
@@ -789,7 +784,13 @@ def _model_digest(model) -> str:
     return h.hexdigest()
 
 
-def _fingerprint(source: Path, target_dt: float, reference: str, model) -> str:
+def _fingerprint(
+    source: Path,
+    target_dt: float,
+    reference: str,
+    model,
+    support_schedule: SupportSchedule | None = None,
+) -> str:
     """What the cached conversion was built from.
 
     Content-addressed rather than mtime-based: a clip restored from a backup or
@@ -803,6 +804,8 @@ def _fingerprint(source: Path, target_dt: float, reference: str, model) -> str:
     h = hashlib.sha256()
     h.update(source.read_bytes())
     h.update(f"|{target_dt!r}|{reference}|{_model_digest(model)}|v2".encode())
+    if support_schedule is not None:
+        h.update(support_schedule.cache_key.encode())
     return h.hexdigest()
 
 
@@ -811,6 +814,7 @@ def ensure_motion_npz(
     directory: Path,
     asset: Path | None = None,
     reference: str | None = None,
+    support_schedule: SupportSchedule | None = None,
 ) -> Path:
     """Convert the material into mjlab's `MotionLoader` format, and return its path.
 
@@ -819,6 +823,11 @@ def ensure_motion_npz(
     environment build time rather than as a step the user is asked to remember,
     because a conversion the user has to re-run by hand is one that eventually does
     not get re-run -- and a stale cache trains the previous dance without a word.
+
+    Without a support schedule the original four-foot check is unchanged. A
+    task may supply an explicit near-ground schedule for stepping/kicking; its
+    labels and tolerances are included in the cache fingerprint. No trajectory
+    channels are altered by either validation mode.
 
     `MotionLoader` reads six keys and ignores the rest, so the provenance is
     written into the same file rather than into a sidecar that can be separated
@@ -841,7 +850,7 @@ def ensure_motion_npz(
     cache = material.motion.parent / ".cache"
     out = cache / f"{material.motion.stem}.motion.npz"
     stamp = cache / f"{material.motion.stem}.motion.json"
-    want = _fingerprint(material.motion, target_dt, ref, model)
+    want = _fingerprint(material.motion, target_dt, ref, model, support_schedule)
     if out.is_file() and stamp.is_file():
         try:
             if json.loads(stamp.read_text()).get("fingerprint") == want:
@@ -938,15 +947,17 @@ def ensure_motion_npz(
         body_pos[k] = data.xpos[1:]
         body_quat[k] = data.xquat[1:]
         for b in range(n_bodies):
-            mujoco.mj_objectVelocity(
-                model, data, mujoco.mjtObj.mjOBJ_BODY, b + 1, vel6, 0
-            )
+            mujoco.mj_objectVelocity(model, data, mujoco.mjtObj.mjOBJ_BODY, b + 1, vel6, 0)
             body_ang[k, b] = vel6[0:3]
             body_lin[k, b] = vel6[3:6]
 
         site_z[k] = [data.site_xpos[s][2] for s in site_ids]
 
-    _check_support_feet(site_z, home_z, ref)
+    if support_schedule is None:
+        _check_support_feet(site_z, home_z, ref)
+        support_report = {"mode": "four fixed support feet"}
+    else:
+        support_report = support_schedule.validate(site_z, home_z, target_dt)
 
     cache.mkdir(parents=True, exist_ok=True)
     np.savez_compressed(
@@ -962,20 +973,27 @@ def ensure_motion_npz(
         body_names=np.array(body_names),
         fps=np.array(1.0 / target_dt),
     )
-    stamp.write_text(json.dumps({
-        "fingerprint": want,
-        "source": material.motion.name,
-        "reference": ref,
-        # So the file says which robot it was built for, not only that it was
-        # built for some robot the fingerprint agreed with.
-        "model_digest": _model_digest(model)[:16],
-        "bodies": int(n_bodies),
-        "frames": int(n),
-        "fps": round(1.0 / target_dt, 6),
-        "duration_s": round(n * target_dt, 3),
-        "bpm": clip.bpm,
-        "audio_start_in_sim_s": clip.audio_start_s,
-    }, indent=2) + "\n")
+    stamp.write_text(
+        json.dumps(
+            {
+                "fingerprint": want,
+                "source": material.motion.name,
+                "reference": ref,
+                "support_validation": support_report,
+                # So the file says which robot it was built for, not only that it was
+                # built for some robot the fingerprint agreed with.
+                "model_digest": _model_digest(model)[:16],
+                "bodies": int(n_bodies),
+                "frames": int(n),
+                "fps": round(1.0 / target_dt, 6),
+                "duration_s": round(n * target_dt, 3),
+                "bpm": clip.bpm,
+                "audio_start_in_sim_s": clip.audio_start_s,
+            },
+            indent=2,
+        )
+        + "\n"
+    )
     print(
         f"[mjrl] dance: converted {material.motion.name} "
         f"({clip.duration_s:.1f} s at {1.0 / clip.dt:.0f} Hz) -> {n} frames at "

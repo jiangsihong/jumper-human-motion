@@ -1,0 +1,19 @@
+{
+  "name": "tripod_walk",
+  "task": "jumper.tripod",
+  "policy_version": "ppo_v1",
+  "checkpoint_file": "tripod_walk/tripod_walk.pt",
+  "source_checkpoint": "logs/jumper/jumper.tripod/2026-10-31_19-48-33/model_2849.pt",
+  "source_sha256": "99186af28c4900611230260eac14306642ebb8ccf3284c442372d79a8b1a4c70",
+  "iteration_index": 2849,
+  "completed_iterations": 2850,
+  "algorithm": "PPO",
+  "status": "trained candidate; not labeled best or hardware validated",
+  "contents": "Full original checkpoint; rename/copy only, optimizer and training state retained",
+  "validation": {
+    "cpu_checkpoint_load": "passed",
+    "all_saved_tensors_finite": true,
+    "tensor_count": 92,
+    "copy_sha256_match": true
+  }
+}

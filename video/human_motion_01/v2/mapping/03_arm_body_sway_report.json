@@ -1,0 +1,141 @@
+{
+  "name": "03_arm_body_sway",
+  "version": 2,
+  "training_started": false,
+  "samples": 476,
+  "duration_s": 9.5,
+  "primary_reference_type": "expressive kinematic candidate, not overwritten by PD playback",
+  "leg_mapping": "hands LF/RF only; feet LM/RM/LR/RR only",
+  "foot_world_excursion_m": {
+    "LF": {
+      "x": 0.08069880886665372,
+      "y": 0.14291668102616933,
+      "z": 0.23682185424959537
+    },
+    "RF": {
+      "x": 0.0684212812827629,
+      "y": 0.1641102215881957,
+      "z": 0.2179265116993999
+    },
+    "LM": {
+      "x": 0.06490804176141864,
+      "y": 0.08759745948255132,
+      "z": 0.0572927331508004
+    },
+    "RM": {
+      "x": 0.07263048432438866,
+      "y": 0.1423085197424673,
+      "z": 0.05510974233918585
+    },
+    "LR": {
+      "x": 0.020537687925223383,
+      "y": 0.10540925573418297,
+      "z": 0.055151835716641694
+    },
+    "RR": {
+      "x": 0.031873407192394926,
+      "y": 0.13324332438497707,
+      "z": 0.055684746956860987
+    }
+  },
+  "body_world_excursion_m": [
+    0.01794674251574907,
+    0.08970598772353655,
+    0.0006878928586456362
+  ],
+  "peak_joint_speed_rad_s": 11.999999999999998,
+  "min_joint_limit_margin_rad": 0.025000000000000133,
+  "ik_max_error_m": 0.10462253901862646,
+  "ik_mean_error_m": 0.004487002002421094,
+  "geometry": {
+    "max_floor_overlap_m": 0.0032181630635674374,
+    "max_self_overlap_m": 0.0,
+    "contacts_over_3mm": [],
+    "note": "prescribed geometry audit; not a dynamic stability certificate"
+  },
+  "format_load_check": "passed",
+  "fixed_support_dance_conversion": {
+    "status": "not_compatible_with_fixed_four_support_dance_check",
+    "reason": "the reference does not describe a posture the robot can stand in: forward kinematics puts the four support feet 22.0 mm out of plane on the median frame (tolerance 5 mm).\nREFERENCE is 'measured'. The commanded channels are PD *targets* and are expected to fail this -- nothing ever required forward kinematics on them to close. Use 'measured', or check that the base pose and the joint angles come from the same take.",
+    "note": "Do not lower kick/step amplitude to satisfy an all-four-feet-grounded dance assumption; future task needs scheduled contacts."
+  },
+  "source_interval_s": [
+    24.9,
+    28.333333333333332
+  ],
+  "step_events": [
+    [
+      0.18,
+      0.41500000000000004,
+      2,
+      0.055
+    ],
+    [
+      0.41500000000000004,
+      0.6500000000000001,
+      5,
+      0.055
+    ],
+    [
+      0.6500000000000001,
+      0.885,
+      3,
+      0.055
+    ],
+    [
+      0.885,
+      1.12,
+      4,
+      0.055
+    ],
+    [
+      1.15,
+      1.3925,
+      3,
+      0.055
+    ],
+    [
+      1.3925,
+      1.635,
+      4,
+      0.055
+    ],
+    [
+      1.635,
+      1.8775,
+      2,
+      0.055
+    ],
+    [
+      1.8775,
+      2.12,
+      5,
+      0.055
+    ],
+    [
+      2.15,
+      2.3674999999999997,
+      2,
+      0.055
+    ],
+    [
+      2.3674999999999997,
+      2.585,
+      5,
+      0.055
+    ],
+    [
+      2.585,
+      2.8025,
+      3,
+      0.055
+    ],
+    [
+      2.8025,
+      3.02,
+      4,
+      0.055
+    ]
+  ],
+  "kick_note": null
+}

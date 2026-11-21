@@ -1,0 +1,30 @@
+{
+  "task": "jumper.human_arm_body_sway",
+  "reference_source": "video/human_motion_01/v2/trajectories/03_arm_body_sway/reference.npz",
+  "reference_sha256": "4175f269fd5836a2f43a729826114ccf45c358ce51b57bd1c32f010ff454db9f",
+  "reference_modified": false,
+  "backend": "warp:cuda:0",
+  "gpu": "RTX 5060 Laptop GPU 8 GiB",
+  "num_envs": 256,
+  "iterations": 5,
+  "mean_reward_first_last": [
+    0.15,
+    0.18
+  ],
+  "checkpoint": "logs/jumper/jumper.human_arm_body_sway/2026-11-02_19-13-00/model_4.pt",
+  "result": "startup checks only; the policy has not learned the performance",
+  "tests": "51 passed, 1 skipped; three support checks repeated after terminology update",
+  "support_validation": "near-ground geometry labels, not proof of contact forces or stability",
+  "formal_training_started": false,
+  "replay": {
+    "backend": "warp:cuda:0",
+    "num_envs": 1,
+    "observation_noise": true,
+    "requested_steps": 474,
+    "completed_steps": 62,
+    "measurement_rows": 61,
+    "simulated_seconds": 1.24,
+    "measure_directory": "logs/jumper/jumper.human_arm_body_sway/2026-11-02_19-13-00/measure",
+    "result": "early ending; not learned after five startup iterations"
+  }
+}

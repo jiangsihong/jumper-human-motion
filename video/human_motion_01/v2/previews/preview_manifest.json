@@ -1,0 +1,74 @@
+[
+  {
+    "name": "01_side_step",
+    "comparison": {
+      "path": "video/human_motion_01/v2/previews/01_side_step_comparison.mp4",
+      "frames": 419,
+      "fps": 30.0,
+      "size": [
+        1280,
+        480
+      ]
+    },
+    "physics_comparison": {
+      "path": "video/human_motion_01/v2/previews/01_side_step_physics_comparison.mp4",
+      "frames": 419,
+      "fps": 30.0,
+      "size": [
+        1280,
+        480
+      ]
+    },
+    "target_is_prescribed": true,
+    "physics_has_root_assistance": false,
+    "training_started": false
+  },
+  {
+    "name": "02_kick_step",
+    "comparison": {
+      "path": "video/human_motion_01/v2/previews/02_kick_step_comparison.mp4",
+      "frames": 275,
+      "fps": 30.0,
+      "size": [
+        1280,
+        480
+      ]
+    },
+    "physics_comparison": {
+      "path": "video/human_motion_01/v2/previews/02_kick_step_physics_comparison.mp4",
+      "frames": 275,
+      "fps": 30.0,
+      "size": [
+        1280,
+        480
+      ]
+    },
+    "target_is_prescribed": true,
+    "physics_has_root_assistance": false,
+    "training_started": false
+  },
+  {
+    "name": "03_arm_body_sway",
+    "comparison": {
+      "path": "video/human_motion_01/v2/previews/03_arm_body_sway_comparison.mp4",
+      "frames": 286,
+      "fps": 30.0,
+      "size": [
+        1280,
+        480
+      ]
+    },
+    "physics_comparison": {
+      "path": "video/human_motion_01/v2/previews/03_arm_body_sway_physics_comparison.mp4",
+      "frames": 286,
+      "fps": 30.0,
+      "size": [
+        1280,
+        480
+      ]
+    },
+    "target_is_prescribed": true,
+    "physics_has_root_assistance": false,
+    "training_started": false
+  }
+]

@@ -1,69 +1,163 @@
-![Jumper](docs/media/jumper-hero-en.png)
-
-# Jumper
+# Jumper Human Motion
 
 **English** | [简体中文](README.zh.md)
 
-**Jumper is a 22-DoF crab robot.** [View hardware →](docs/HARDWARE.md)
+Human-video motion retargeting and PPO imitation experiments for the 22-DoF
+Jumper hexapod. This project extends
+[KingKongRobotics/jumper](https://github.com/KingKongRobotics/jumper), based on
+upstream commit `198686eac0d188815d0943e9fee50de415edc80a`.
 
-This repo is Jumper’s AI toolkit for appearance, motion, and scene creation. Open this repo in an AI coding assistant and try the prompts below.
+The contribution is an engineering workflow connecting reviewed human motion,
+robot references, task setup and traceable policy candidates. PPO, MuJoCo,
+MediaPipe and the upstream mjlab/BeyondMimic tracking framework are reused.
 
-> 🦀 **Get a free Jumper!** [Find out how →](https://beunlimited.me/zh/events/crab-robot-challenge-2026)
+![V2 kick reference: PD execution, not a trained policy](video/human_motion_01/v2/previews/02_kick_step_pd_physics.contact_sheet.png)
 
-## One sentence to design an appearance
+## Extensions beyond the original repository
 
-> Design a warm sand ranger appearance for Jumper with coordinated body and limb colors, then export a `.skin`.
+| Area | Upstream capability | Extension in this repository |
+| --- | --- | --- |
+| Motion source | Existing robot trajectories and example tasks | Reviewed video clips, 33-point human landmarks and video-derived robot references |
+| Retargeting | Robot/reference infrastructure | Human arms drive LF/RF; human footsteps are adapted to LM/RM/LR/RR, with explicit crawl/kick phases |
+| Amplitude review | General motion tracking | Conservative v1 and expressive v2 retained side by side; planned poses and measured PD execution are separate |
+| Custom tasks | Generic PPO and tracking stack | Three independently configured `human_*` tasks with their own material, observations and tracking parameters |
+| Ground consistency | Four-foot coplanarity validation | Optional near-ground support schedules for stepping/kicking, with schedule contents and tolerances included in cache fingerprints |
+| Finite performance | Reference playback can wrap/reset | Explicit termination before wraparound to avoid counting a state reset as a continuous performance |
+| Candidate management | Timestamped training runs | Named checkpoints under `model/`, with source paths, iteration counts and SHA-256 records |
+| Reproduction | Original framework and examples | Portable preview-model paths, bilingual instructions and selected derived references/checkpoints |
 
-| | | |
-|:-:|:-:|:-:|
-| ![Warm sand ranger appearance](docs/media/design-warm-sand.png) | ![Silver armor appearance](docs/media/design-silver-armor.png) | ![Raphael Turtle appearance](docs/media/design-raphael.png) |
-| [**Warm sand ranger**](https://github.com/KingKongRobotics/jumper-design/blob/be74e0f2e5e2433d24a3a7b1c1aa0dbeae480356/library/skins/warm-sand-ranger-integrated-v2.skin) | [**Silver armor**](https://github.com/KingKongRobotics/jumper-design/blob/be74e0f2e5e2433d24a3a7b1c1aa0dbeae480356/library/skins/mecha-tripo-v3.skin) | [**Raphael Turtle**](https://github.com/KingKongRobotics/jumper-design/blob/be74e0f2e5e2433d24a3a7b1c1aa0dbeae480356/library/skins/raphael-turtle-v1.skin) |
+This is not a new reinforcement-learning algorithm or an end-to-end system that
+learns arbitrary videos automatically. Footfall order and monocular kick depth
+include manual adaptation. Original upstream documentation is preserved in
+[English](docs/UPSTREAM_README.md) and [Chinese](docs/UPSTREAM_README.zh.md).
 
-[Browse all skins](https://github.com/KingKongRobotics/jumper-design/tree/main/library/skins)
+## Pipeline and included material
 
-## One sentence to train a motion
+```text
+User-supplied video -> reviewed clips -> MediaPipe landmarks
+  -> robot motion targets -> free-base PD records -> reference-tracking PPO
+  -> measured replay and a named checkpoint candidate
+```
 
-> Train a stable tripod gait for Jumper, replay and evaluate the result, then package it as an `.app`.
+- [v1](video/human_motion_01/v1/README.md): conservative mapping and extraction tools.
+- [v2](video/human_motion_01/v2/README.md): larger stepping/kicking references.
+- [model](model/README.md): named policy candidates and provenance.
+- `tasks/jumper/human_*/media/`: the actual data read during training.
 
-| | | |
-|:-:|:-:|:-:|
-| ![Jumper walking](docs/media/walk.gif) | ![Jumper changing posture](docs/media/posture.gif) | ![Jumper waving](docs/media/gesture.gif) |
-| **Walk** | **Posture** | **Gesture** |
-| ![Dance simulation](docs/media/dance.gif)<br>![Dance website showcase](docs/media/official-dance.gif) | ![Jump simulation](docs/media/jump.gif)<br>![Jump website showcase](docs/media/official-jump.gif) | ![Grasp simulation](docs/media/claw.gif)<br>![Grasp website showcase](docs/media/official-grasp.gif) |
-| **Dance** | **Jump** | **Grasp** |
+Raw human footage, its crops/overlays/comparison movies, downloaded pose packages,
+logs and conversion caches are not included. Source hashes are retained. Supply
+footage you are authorized to use to rerun extraction or human/robot comparisons;
+existing robot references, robot-only previews and policy replay do not need it.
+The fixed extraction intervals describe this reviewed source, not arbitrary videos.
 
-## One sentence to create a scene
+## Install
 
-> Create a park pump-track scene for Jumper with rolling terrain, trees and benches, then export a `.map`.
+Tested development environment: Ubuntu x86_64, Python 3.12 and RTX 5060 Laptop GPU
+(8 GiB). Use a GPU-compatible PyTorch build for Warp training; see the
+[upstream setup guide](docs/AGENT_SETUP.md) for GPU/CPU installation details.
 
-| | | |
-|:-:|:-:|:-:|
-| ![Park pump track scene](docs/media/design-park.png) | ![Bedroom scene](docs/media/design-bedroom.png) | ![Soccer scene](docs/media/design-soccer.png) |
-| [**Park pump track**](https://github.com/KingKongRobotics/jumper-design/blob/be74e0f2e5e2433d24a3a7b1c1aa0dbeae480356/library/maps/park-pump-track.map) | [**Bedroom**](https://github.com/KingKongRobotics/jumper-design/blob/be74e0f2e5e2433d24a3a7b1c1aa0dbeae480356/library/maps/bedroom.map) | [**Soccer**](https://github.com/KingKongRobotics/jumper-design/blob/be74e0f2e5e2433d24a3a7b1c1aa0dbeae480356/library/maps/soccer.map) |
+```sh
+git clone https://github.com/jiangsihong/jumper-human-motion.git
+cd jumper-human-motion
+python -m venv .venv
+source .venv/bin/activate
+python -m pip install -e ".[dev]"
+python scripts/train.py --list
+```
 
-[Browse all maps](https://github.com/KingKongRobotics/jumper-design/tree/main/library/maps)
+With an existing Conda environment, activate it and run the editable install there.
+Do not install separate PyPI copies of `mjlab` or `rsl-rl-lib`; this checkout uses
+its vendored code under `rl/`.
 
-## Where to find things
+## Run a saved policy
 
-| Resource | Purpose |
-|---|---|
-| [jumper-design](https://github.com/KingKongRobotics/jumper-design) | Appearance and scene creation; your assistant reads its [instructions](https://github.com/KingKongRobotics/jumper-design/blob/main/AGENTS.md) and uses its tools as needed. |
-| [Training tutorial](docs/TUTORIAL.md) | Motion training, replay and policy export in this repository. |
-| [Colab training](docs/COLAB.md) | GPU training in a notebook, checkpoint backup, resume, ONNX export and MP4 simulation replay. |
-| [Motion bundles](deploy/BUNDLE.md) | Package trained motions and their controller as an `.app`; see the [build guide](deploy/README.md) for prerequisites. |
-| [Project guide](docs/PROJECT_GUIDE.md) | Setup, current capabilities and further documentation. |
+Run one command at a time, from the repository root:
 
-Training builds on [mjlab](https://github.com/mujocolab/mjlab),
-[rsl_rl](https://github.com/leggedrobotics/rsl_rl), [MuJoCo](https://github.com/google-deepmind/mujoco)
-and [MuJoCo Warp](https://github.com/google-deepmind/mujoco_warp).
-Example appearance and scene images come from jumper-design; [image sources](docs/media/DESIGN_SOURCES.md)
-and [third-party notices](NOTICE) record attribution.
+```sh
+python scripts/play.py --task jumper.human_side_step --checkpoint model/side_step/side_step.pt
+python scripts/play.py --task jumper.human_kick_step --checkpoint model/kick_step/kick_step.pt
+python scripts/play.py --task jumper.human_arm_body_sway --checkpoint model/arm_body_sway/arm_body_sway.pt
+python scripts/play.py --task jumper.tripod --checkpoint model/tripod_walk/tripod_walk.pt
+```
 
-## License
+`--task` selects the simulation/task config. `--checkpoint` selects the exact
+trained network state. These commands run policy-controlled physics, not recorded
+pose animation. The human candidates have 2000 training iterations; the walking
+candidate has 2850. They are provided for inspection, not labeled as best policies.
 
-Copyright 2026 KingKong Robotics.
+## Train one motion
 
-Maintainer-owned project materials are licensed under Apache-2.0. See [LICENSE](LICENSE),
-[NOTICE](NOTICE), and [licensing details](docs/PROJECT_GUIDE.md#license).
-Third-party materials remain under their respective terms, and generated outputs do not
-automatically inherit this repository's license.
+```sh
+python scripts/train.py --task jumper.human_side_step --backend warp --device cuda:0 --num_envs 256 --max-iterations 2000 --headless
+```
+
+Replace the task with `jumper.human_kick_step` or `jumper.human_arm_body_sway` for
+the other clips. Train them sequentially. 2000 iterations is an initial budget,
+not a guarantee of convergence. TensorBoard is started by the existing launcher;
+open its printed URL after the first event data is written.
+
+Complete runs stay under `logs/jumper/<task>/<timestamp>/`, relative to the
+launch directory. Start from the repository root. Selected copies under `model/`
+are not automatically replaced by later runs. `--resume` continues the latest run;
+its `--max-iterations` value means additional iterations.
+
+## Preview a mapped reference
+
+```sh
+python video/human_motion_01/preview_mapping.py --version 1 --motion 2 --loop
+python video/human_motion_01/preview_mapping.py --version 2 --motion 2 --loop
+```
+
+These are recorded reference playbacks, separate from trained-policy replay.
+V2 reuses v1 landmarks and the IK utility. The third mapping uses only the first
+103 full-body frames; clips 1/2 are slowed 2x and clip 3 is slowed 2.5x.
+To recreate source clips, first supply the original source:
+
+```sh
+python video/human_motion_01/v1/extract_clips.py --source /path/to/source.mp4
+```
+
+Pose extraction additionally needs MediaPipe/OpenCV and the official Pose
+Landmarker model under `v1/.tools/`; those optional dependencies are not vendored.
+Finalizers require the matching source/clip hashes and fail clearly if unavailable;
+they do not claim to have revalidated omitted footage.
+
+## Validation and current limitations
+
+Selected checks:
+
+```sh
+python -m pytest tests/test_registry.py tests/test_task_parity.py tests/test_reference_support.py tests/test_dance_motion.py -q
+```
+
+The selected check set recorded 51 passed and 1 skipped during development.
+Publication validation including translation/layout/log-layout checks recorded
+139 passed and 1 skipped; portable preview models and checkpoint hashes also passed.
+Ruff 0.17.6 static checks passed across the repository.
+Three added support-validation checks cover swing-vs-stance geometry, wrong
+labels/timelines/heights and cache invalidation. These are software checks,
+not motion success trials or stability certification.
+
+Known limits:
+
+- The third trained candidate still fails to reproduce the intended large
+  front-arm motion. Training completion and increasing total reward do not prove
+  successful imitation. The proposed reference-plus-residual controller has **not**
+  been implemented.
+- The v2 PD reference kick spans about 16.3 cm fore/aft and 6.1 cm vertically.
+  These measurements describe a reference PD run, not the learned policy.
+- Clip 3's reference tilts roughly 39 degrees. Near-ground labels are geometric
+  proxies, not proof of multiple load-bearing contacts or dynamic stability.
+- Actors use simulated position error and linear velocity. A real state estimator
+  and deployment contract would be needed for hardware; no real-robot validation
+  is claimed.
+- `startup_validation.json` records early five-iteration checks. Those historical
+  records are distinct from the later 2000-iteration candidates in `model/`.
+
+## Attribution and license
+
+The original Jumper framework, assets and notices remain attributed to KingKong
+Robotics and their respective contributors. See [LICENSE](LICENSE), [NOTICE](NOTICE),
+[licenses](licenses/) and [upstream provenance](docs/VENDOR.md). Upstream Apache-2.0
+licensing and third-party terms are retained. User-supplied footage is not granted
+an Apache license by this repository and is not redistributed here.

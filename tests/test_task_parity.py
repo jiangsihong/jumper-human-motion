@@ -55,6 +55,11 @@ NOT_LOCOMOTION = {
     # of 20, and its reward budget is the tracking terms rather than the velocity
     # skeleton's. Nothing it could agree with the four on would mean anything.
     "jumper.dance",
+    # A finite mapped human performance with position-error observations and
+    # reference tracking, not a velocity-commanded locomotion control group.
+    "jumper.human_side_step",
+    "jumper.human_kick_step",
+    "jumper.human_arm_body_sway",
     # The same, each with a clip of its own, imported from rl-wbc-fsm.
     "jumper.dance_brazilian",
     "jumper.dance_dream_wings",
@@ -98,11 +103,11 @@ NOT_LOCOMOTION = {
 #: Fields a task is allowed to differ on because **the gait fixes them**.
 #: Matched as substrings of the field name.
 GAIT_EXEMPT = (
-    "_gait",           # the gait reward itself
-    "gait_phase",      # its clock, in the observation
-    "freq_hz",         # the cadence every gated term is handed
+    "_gait",  # the gait reward itself
+    "gait_phase",  # its clock, in the observation
+    "freq_hz",  # the cadence every gated term is handed
     "force_threshold",  # a fair share of load depends on how many legs are down
-    "stance_",         # the stance terms exist only where a clock says which legs
+    "stance_",  # the stance terms exist only where a clock says which legs
 )
 
 #: Fields a task is allowed to differ on because **the speed ceiling fixes them**,
@@ -110,9 +115,12 @@ GAIT_EXEMPT = (
 #: times cadence. Everything here is derived from `command_*_ceiling` by the
 #: skeleton, so these differ *as a consequence* rather than by choice.
 CEILING_EXEMPT = (
-    "cmd/lin", "cmd/ang",
-    "cur/command/levels", "cur/command/ang_levels",
-    "track_linear_velocity/std", "track_angular_velocity/std",
+    "cmd/lin",
+    "cmd/ang",
+    "cur/command/levels",
+    "cur/command/ang_levels",
+    "track_linear_velocity/std",
+    "track_angular_velocity/std",
 )
 
 
@@ -144,8 +152,16 @@ def snapshot(task: str) -> dict:
     out["sim/dt"] = cfg.sim.mujoco.timestep
     agent = tasks.load_agent_cfg(task)
     out["ppo/num_steps_per_env"] = agent.num_steps_per_env
-    for field in ("gamma", "lam", "learning_rate", "entropy_coef", "clip_param",
-                  "num_learning_epochs", "num_mini_batches", "desired_kl"):
+    for field in (
+        "gamma",
+        "lam",
+        "learning_rate",
+        "entropy_coef",
+        "clip_param",
+        "num_learning_epochs",
+        "num_mini_batches",
+        "desired_kl",
+    ):
         out[f"ppo/{field}"] = getattr(agent.algorithm, field, None)
     return out
 
@@ -170,9 +186,9 @@ def test_the_tasks_differ_only_in_their_gait_and_its_ceiling() -> None:
             continue
         values = {t: snaps[t].get(field, "<absent>") for t in TASKS}
         if len({str(v) for v in values.values()}) > 1:
-            offenders.append(f"{field}: " + ", ".join(
-                f"{t.split('.')[1]}={v}" for t, v in values.items()
-            ))
+            offenders.append(
+                f"{field}: " + ", ".join(f"{t.split('.')[1]}={v}" for t, v in values.items())
+            )
     assert not offenders, (
         "these differ between tasks and are neither the gait nor its ceiling:\n  "
         + "\n  ".join(offenders)
@@ -227,10 +243,7 @@ def test_the_exemptions_are_not_vacuous() -> None:
     """
     snaps = {t: snapshot(t) for t in TASKS}
     fields = sorted(set().union(*(set(s) for s in snaps.values())))
-    differing = [
-        f for f in fields
-        if len({str(snaps[t].get(f, "<absent>")) for t in TASKS}) > 1
-    ]
+    differing = [f for f in fields if len({str(snaps[t].get(f, "<absent>")) for t in TASKS}) > 1]
     assert differing, "nothing differs at all, so the exemptions prove nothing"
 
     reasons = {exempt(f) for f in differing}

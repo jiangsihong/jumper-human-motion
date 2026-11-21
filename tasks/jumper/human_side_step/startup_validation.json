@@ -1,0 +1,37 @@
+{
+  "task": "jumper.human_side_step",
+  "scope": "first side-step only; simulation-only",
+  "reference_sha256": "a1d3c35a4257264d6fa200022e591fee303481c0d351e1d038c6ae0f25b55dfe",
+  "backend": "warp:cuda:0",
+  "gpu": "NVIDIA GeForce RTX 5060 Laptop GPU, 8 GiB",
+  "num_envs": 256,
+  "num_steps_per_env": 32,
+  "iterations": 5,
+  "checkpoint": "logs/jumper/jumper.human_side_step/2026-11-02_18-38-23/model_4.pt",
+  "mean_reward_first_last": [
+    0.24,
+    0.81
+  ],
+  "training_wall_time_reported_s": 3,
+  "meaning": "smoke validation only, not a learned imitation result",
+  "checks": {
+    "gpu_mujoco_imports_registry": "passed",
+    "registry_and_task_parity_tests": "25 passed",
+    "source_copy_identical": true,
+    "reference_amplitude_preserved": true,
+    "independent_review": "passed"
+  },
+  "replay": {
+    "backend": "warp:cuda:0",
+    "num_envs": 1,
+    "observation_noise": true,
+    "stop_on_done": true,
+    "requested_steps": 696,
+    "completed_steps": 656,
+    "measure_rows": 655,
+    "simulated_seconds": 13.12,
+    "result": "episode ended early; full-clip imitation has not been achieved",
+    "measure_directory": "logs/jumper/jumper.human_side_step/2026-11-02_18-38-23/measure"
+  },
+  "formal_training_started": false
+}

@@ -1,0 +1,55 @@
+{
+  "name": "02_kick_step",
+  "source": {
+    "frames": 123,
+    "source_start_s": 12.4,
+    "invalid_landmark_samples": 0,
+    "observed_12_landmark_samples": 1476,
+    "source_type": "monocular estimated landmarks; filtered/interpolated where masked",
+    "third_clip_policy": "all extracted frames"
+  },
+  "frames": 492,
+  "dt": 0.02,
+  "duration_s": 9.82,
+  "source_mapping_window_s": [
+    12.4,
+    16.5
+  ],
+  "reference": "video/human_motion_01/v1/trajectories/02_kick_step/reference.npz",
+  "detailed_trajectory": "video/human_motion_01/v1/mapping/02_kick_step_robot_trajectory.npz",
+  "reference_type": "kinematic candidate, no learning and no dynamic rollout",
+  "max_joint_speed_rad_s": 4.499999999999996,
+  "min_joint_limit_margin_rad": 0.025000000000004796,
+  "max_foot_target_error_m": 0.014404317426528953,
+  "mean_foot_target_error_m": 0.00021832946167165993,
+  "min_target_near_ground_polygon_margin_m": 0.008698541432678317,
+  "polygon_margin_note": "geometric target-foot heuristic only, not a contact-based stability certificate",
+  "max_floor_penetration_m": 0.0014115936414996946,
+  "max_self_penetration_m": 0.0,
+  "adaptation": "arm priority; front gait attenuated while gesturing; rear/middle lift capped 3.5mm; COM shifted into support polygon",
+  "training_format_conversion": {
+    "status": "passed",
+    "path": "video/human_motion_01/v1/trajectories/02_kick_step/.cache/reference.motion.npz",
+    "note": "schema and kinematic checks only; not dynamic feasibility"
+  },
+  "full_reference_audit": {
+    "frames": 492,
+    "includes_lead_and_tail": true,
+    "max_floor_penetration_m": 0.0014115936414996946,
+    "max_self_penetration_m": 0.0,
+    "min_geometric_floor_contacts": 0,
+    "min_contact_polygon_margin_m": -0.1121995419362574,
+    "frames_without_nondegenerate_contact_polygon": 426,
+    "note": "contacts on prescribed poses; no contact-force or dynamic stability guarantee",
+    "worst_penetration_pairs": {
+      "LR_foot_tip_link_meshcol | mapping_floor": {
+        "penetration_m": 0.0014115936414996946,
+        "time_s": 7.36
+      },
+      "LM_foot_tip_link_meshcol | mapping_floor": {
+        "penetration_m": 0.0004820058345156794,
+        "time_s": 8.86
+      }
+    }
+  }
+}
