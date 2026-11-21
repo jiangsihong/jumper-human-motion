@@ -1,0 +1,22 @@
+{
+  "schema": "replay_info/1",
+  "task": "jumper.human_arm_body_sway",
+  "checkpoint": "model/arm_body_sway/arm_body_sway.pt",
+  "physics_hz": 200.0,
+  "control_hz": 50.0,
+  "control_dt": 0.02,
+  "observation_noise": true,
+  "control_steps": 474,
+  "scene": "task default",
+  "simulated_seconds": 9.48,
+  "supports_velocity_command": false,
+  "command_ranges": {
+    "status": "not_requested",
+    "source": "replay_task_config",
+    "curriculum_level": null,
+    "ranges": null
+  },
+  "backend": "native",
+  "device": "cpu",
+  "num_envs": 1
+}

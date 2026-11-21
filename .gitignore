@@ -80,3 +80,6 @@ video/human_motion_01/v1/previews/*_comparison.mp4
 video/human_motion_01/v2/previews/*_comparison.mp4
 video/human_motion_01/v1/previews/*.jpg
 video/human_motion_01/v2/previews/*.jpg
+
+# Replay measurements are published with the showcase, not duplicated beside weights.
+model/*/measure/

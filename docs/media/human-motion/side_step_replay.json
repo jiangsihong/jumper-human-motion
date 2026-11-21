@@ -1,0 +1,22 @@
+{
+  "schema": "replay_info/1",
+  "task": "jumper.human_side_step",
+  "checkpoint": "model/side_step/side_step.pt",
+  "physics_hz": 200.0,
+  "control_hz": 50.0,
+  "control_dt": 0.02,
+  "observation_noise": true,
+  "control_steps": 696,
+  "scene": "task default",
+  "simulated_seconds": 13.92,
+  "supports_velocity_command": false,
+  "command_ranges": {
+    "status": "not_requested",
+    "source": "replay_task_config",
+    "curriculum_level": null,
+    "ranges": null
+  },
+  "backend": "native",
+  "device": "cpu",
+  "num_envs": 1
+}

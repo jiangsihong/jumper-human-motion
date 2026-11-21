@@ -1,12 +1,18 @@
 # Public motion data
 
-Raw source footage, clips and human/robot comparison media are user-supplied and
-not redistributed. The source checksum in v1/manifest.json records the reviewed
-input. The included derived landmarks and robot references describe only that
-input and its manual adaptations. They are not a general video-to-policy model.
+At the project author's request, the showcase under `docs/media/human-motion/`
+includes the original input video, three actual input excerpts, human/PD comparisons,
+trained-policy rollouts, GIFs and joint measurements. The original video remains
+unaltered; excerpts are silent and preserve visible source attribution/watermarks.
+The footage is demonstration input, not original robot-policy output. Copyright
+remains with its original rightsholders; Apache-2.0 for the code does not relicense it.
 
-Robot-only previews, reference arrays, task material and selected checkpoints
-are provided for inspection. To run extraction/comparison/final source checks,
-supply the matching source video and regenerate clips. `v1/extract_clips.py`
-accepts `--source`; both finalizers accept `--source` and require matching hashes.
-No source verification is reported as passed when footage is missing.
+The source checksum in `human_motion_01/v1/manifest.json` records the reviewed
+input. `docs/media/human-motion/manifest.json` links showcase files, checkpoint
+hashes, recording commands and measurements. Source, PD reference and trained
+policy are labeled separately. Clip 3's actual input is only its full-body excerpt.
+
+Downloaded pose packages, conversion caches and full training logs remain excluded.
+To recreate the extraction workspace, run `v1/extract_clips.py --source` with the
+included `docs/media/human-motion/source_full.mp4`. Finalizers require matching
+source/clip hashes. Existing robot-reference playback does not need pose extraction.

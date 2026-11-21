@@ -1,0 +1,269 @@
+{
+  "schema": "human-motion-showcase/1",
+  "recorded_date": "2026-11-21",
+  "publication_base_commit": "d304b00de1fa1294a5d070f5d02b24216ab1fd7c",
+  "recording": {
+    "backend": "native",
+    "device": "cpu",
+    "num_envs": 1,
+    "physics_hz": 200,
+    "control_hz": 50,
+    "observation_noise": true,
+    "stop_on_done": true,
+    "seed": null,
+    "training_performed": false,
+    "selection": "One recorded first attempt per named checkpoint; no best-take selection.",
+    "note": "Evaluation uses native CPU; the original training was Warp CUDA. Domain randomization and observation noise remain stochastic."
+  },
+  "motions": [
+    {
+      "name": "side_step",
+      "task": "jumper.human_side_step",
+      "checkpoint": "model/side_step/side_step.pt",
+      "checkpoint_sha256": "ed5c24a76f71a36ebeb463028e46a6a1e5c45ffa975d30d9775d7a61c97cfe4c",
+      "training_iterations": 2000,
+      "training_backend": "warp:cuda",
+      "training_num_envs": 256,
+      "source_interval_s": [
+        2.8,
+        9.3
+      ],
+      "reference_speed_factor": 0.5,
+      "record_command": "MUJOCO_GL=egl python scripts/play.py --task jumper.human_side_step --checkpoint model/side_step/side_step.pt --backend native --device cpu --cpu_threads 1 --num_envs 1 --headless --physics-hz 200 --steps 696 --stop-on-done --measure --video docs/media/human-motion/side_step_policy.mp4 --video-width 640 --video-height 480 --video-distance 0.85 --video-azimuth 135 --video-elevation -25 --replay-info-out docs/media/human-motion/side_step_replay.json",
+      "replay": {
+        "schema": "replay_info/1",
+        "task": "jumper.human_side_step",
+        "checkpoint": "model/side_step/side_step.pt",
+        "physics_hz": 200.0,
+        "control_hz": 50.0,
+        "control_dt": 0.02,
+        "observation_noise": true,
+        "control_steps": 696,
+        "scene": "task default",
+        "simulated_seconds": 13.92,
+        "supports_velocity_command": false,
+        "command_ranges": {
+          "status": "not_requested",
+          "source": "replay_task_config",
+          "curriculum_level": null,
+          "ranges": null
+        },
+        "backend": "native",
+        "device": "cpu",
+        "num_envs": 1
+      },
+      "reached_clip_boundary": true,
+      "metrics": {
+        "samples_after_first_0_5s": 670,
+        "joint_rmse_rad": 0.4402818347712065,
+        "front_limb_joint_rmse_rad": 0.39276346166646525,
+        "right_rear_local_x_span_mm": 77.77476424550453,
+        "right_rear_local_z_span_mm": 32.77491488257726,
+        "reference_right_rear_local_x_span_mm": 37.16621359307522,
+        "reference_right_rear_local_z_span_mm": 70.99377191937431,
+        "method": "Forward kinematics of recorded joint positions, root at identity, same joint order; first 0.5s excluded. Reference aligned one control step ahead of monitor t=0. These are base-relative kinematic spans, not root displacement, contact stability, or success rate."
+      },
+      "known_limitation": "Single replay is not a success-rate study or exact human imitation."
+    },
+    {
+      "name": "kick_step",
+      "task": "jumper.human_kick_step",
+      "checkpoint": "model/kick_step/kick_step.pt",
+      "checkpoint_sha256": "aef0cf0449554312ff005bb5b33ed33cbc552375c8551ebccdcbbf8ce25784eb",
+      "training_iterations": 2000,
+      "training_backend": "warp:cuda",
+      "training_num_envs": 256,
+      "source_interval_s": [
+        12.4,
+        16.5
+      ],
+      "reference_speed_factor": 0.5,
+      "record_command": "MUJOCO_GL=egl python scripts/play.py --task jumper.human_kick_step --checkpoint model/kick_step/kick_step.pt --backend native --device cpu --cpu_threads 1 --num_envs 1 --headless --physics-hz 200 --steps 456 --stop-on-done --measure --video docs/media/human-motion/kick_step_policy.mp4 --video-width 640 --video-height 480 --video-distance 0.85 --video-azimuth 135 --video-elevation -25 --replay-info-out docs/media/human-motion/kick_step_replay.json",
+      "replay": {
+        "schema": "replay_info/1",
+        "task": "jumper.human_kick_step",
+        "checkpoint": "model/kick_step/kick_step.pt",
+        "physics_hz": 200.0,
+        "control_hz": 50.0,
+        "control_dt": 0.02,
+        "observation_noise": true,
+        "control_steps": 456,
+        "scene": "task default",
+        "simulated_seconds": 9.120000000000001,
+        "supports_velocity_command": false,
+        "command_ranges": {
+          "status": "not_requested",
+          "source": "replay_task_config",
+          "curriculum_level": null,
+          "ranges": null
+        },
+        "backend": "native",
+        "device": "cpu",
+        "num_envs": 1
+      },
+      "reached_clip_boundary": true,
+      "metrics": {
+        "samples_after_first_0_5s": 430,
+        "joint_rmse_rad": 0.4244406015859729,
+        "front_limb_joint_rmse_rad": 0.48543150429891396,
+        "right_rear_local_x_span_mm": 119.12546222929863,
+        "right_rear_local_z_span_mm": 47.44061516849883,
+        "reference_right_rear_local_x_span_mm": 172.82530434715537,
+        "reference_right_rear_local_z_span_mm": 65.60714056666696,
+        "method": "Forward kinematics of recorded joint positions, root at identity, same joint order; first 0.5s excluded. Reference aligned one control step ahead of monitor t=0. These are base-relative kinematic spans, not root displacement, contact stability, or success rate."
+      },
+      "known_limitation": "Single replay is not a success-rate study or exact human imitation."
+    },
+    {
+      "name": "arm_body_sway",
+      "task": "jumper.human_arm_body_sway",
+      "checkpoint": "model/arm_body_sway/arm_body_sway.pt",
+      "checkpoint_sha256": "0dbfee25d3da5128a0db58149d861471c18d9675c1a632d01e24ce6fe6b962b4",
+      "training_iterations": 2000,
+      "training_backend": "warp:cuda",
+      "training_num_envs": 256,
+      "source_interval_s": [
+        24.9,
+        28.3333333333
+      ],
+      "reference_speed_factor": 0.4,
+      "record_command": "MUJOCO_GL=egl python scripts/play.py --task jumper.human_arm_body_sway --checkpoint model/arm_body_sway/arm_body_sway.pt --backend native --device cpu --cpu_threads 1 --num_envs 1 --headless --physics-hz 200 --steps 474 --stop-on-done --measure --video docs/media/human-motion/arm_body_sway_policy.mp4 --video-width 640 --video-height 480 --video-distance 0.85 --video-azimuth 135 --video-elevation -25 --replay-info-out docs/media/human-motion/arm_body_sway_replay.json",
+      "replay": {
+        "schema": "replay_info/1",
+        "task": "jumper.human_arm_body_sway",
+        "checkpoint": "model/arm_body_sway/arm_body_sway.pt",
+        "physics_hz": 200.0,
+        "control_hz": 50.0,
+        "control_dt": 0.02,
+        "observation_noise": true,
+        "control_steps": 474,
+        "scene": "task default",
+        "simulated_seconds": 9.48,
+        "supports_velocity_command": false,
+        "command_ranges": {
+          "status": "not_requested",
+          "source": "replay_task_config",
+          "curriculum_level": null,
+          "ranges": null
+        },
+        "backend": "native",
+        "device": "cpu",
+        "num_envs": 1
+      },
+      "reached_clip_boundary": true,
+      "metrics": {
+        "samples_after_first_0_5s": 448,
+        "joint_rmse_rad": 0.8786862031651239,
+        "front_limb_joint_rmse_rad": 1.002574611268764,
+        "right_rear_local_x_span_mm": 121.87037603126835,
+        "right_rear_local_z_span_mm": 82.45732311311784,
+        "reference_right_rear_local_x_span_mm": 63.870765841028934,
+        "reference_right_rear_local_z_span_mm": 122.59699556994897,
+        "method": "Forward kinematics of recorded joint positions, root at identity, same joint order; first 0.5s excluded. Reference aligned one control step ahead of monitor t=0. These are base-relative kinematic spans, not root displacement, contact stability, or success rate."
+      },
+      "known_limitation": "Large front-arm imitation remains incomplete."
+    }
+  ],
+  "files": {
+    "arm_body_sway_joints.csv": {
+      "bytes": 303557,
+      "sha256": "8bb187a32df58110f6d9b481904c8254aeffbf91ca56218b30d9bfbfde6ca8d6"
+    },
+    "arm_body_sway_joints.png": {
+      "bytes": 598774,
+      "sha256": "079efb4cc17a0d10c0fb02036692e0f03e070a03f56fda5b854be91b54edac95"
+    },
+    "arm_body_sway_policy.gif": {
+      "bytes": 4787089,
+      "sha256": "5f730ebde0595c9b589a632118b040a689548991f6eea653590253e99c9cc535"
+    },
+    "arm_body_sway_policy.mp4": {
+      "bytes": 661827,
+      "sha256": "1a763a1693f6df3959ee5866c0ad399dac901ced5bc5caae5d7e139aafa98e9a"
+    },
+    "arm_body_sway_replay.json": {
+      "bytes": 544,
+      "sha256": "9aff0ee6d327f41819fbd3ba2850736ec6d575b382d12faef43fa8673085f8bb"
+    },
+    "arm_body_sway_source.mp4": {
+      "bytes": 546766,
+      "sha256": "1fd5c30d382b5a535bb9256db23e6c23d32fcb222f4b3cb532cecc9d169f5b7c"
+    },
+    "arm_body_sway_source_mapping.gif": {
+      "bytes": 1763915,
+      "sha256": "5d762ae3157052dddc07c7d6d50f048403d195d688bed8ee515a644a9a688b55"
+    },
+    "arm_body_sway_source_mapping.mp4": {
+      "bytes": 906949,
+      "sha256": "ad0842fbccc9a6a7a8e41253dcb69fc8b6bf87c10b8fb5b0ebafa22e251e943c"
+    },
+    "kick_step_joints.csv": {
+      "bytes": 297699,
+      "sha256": "810a7e0a707e36b1fb2b6a8768324d892603aaeee1c3de61a87ce4fe8660ad81"
+    },
+    "kick_step_joints.png": {
+      "bytes": 458937,
+      "sha256": "60c4cde2d977fa8cb199dffde03daac569a27aa4d25ddcd32528084934059265"
+    },
+    "kick_step_policy.gif": {
+      "bytes": 3426015,
+      "sha256": "5bc6aed7312df2836b4423c5dea5e4509e71f5d562e38c90349ed92604f80f9b"
+    },
+    "kick_step_policy.mp4": {
+      "bytes": 516389,
+      "sha256": "037d6a828b76a48cbb924890ee55a8e29089322dd30d3f1c6dd0531a09795e88"
+    },
+    "kick_step_replay.json": {
+      "bytes": 545,
+      "sha256": "6a0a0d9a27a66bd1388ea5009652a79b4f8d4fe1a6161bc2e07d67bcf67fd1d3"
+    },
+    "kick_step_source.mp4": {
+      "bytes": 426433,
+      "sha256": "6dc48f7afaaf7440ce925e81a8e1d7919124a71420d098a095fa76fe7e2d6fd9"
+    },
+    "kick_step_source_mapping.gif": {
+      "bytes": 1130131,
+      "sha256": "16f8df84092776ba1744e92e766a7ee58c563c074d16ebfa683220bdbbeec908"
+    },
+    "kick_step_source_mapping.mp4": {
+      "bytes": 611045,
+      "sha256": "a9184a46e6624b6cd9d3d4ae3106012be4148e482fccf0fa021b494b42add6ce"
+    },
+    "side_step_joints.csv": {
+      "bytes": 446540,
+      "sha256": "8c91eb6eca5b14a7ded39ab4bac52c56303f2f500076a296643600552b0739b4"
+    },
+    "side_step_joints.png": {
+      "bytes": 587345,
+      "sha256": "ce1e6ef527fe248dce26589c51bc2381a33d6dad75907a518d0fc2d381340478"
+    },
+    "side_step_policy.gif": {
+      "bytes": 6524120,
+      "sha256": "b5a7ef316dbaa19faf0f492a30916a79d9938881402fba9eb44d6a1ca5c7669b"
+    },
+    "side_step_policy.mp4": {
+      "bytes": 914371,
+      "sha256": "15a18ba0fdc98d25d888cd4d0d4ccbe124405fedfba4fee1887fb6b3a933e9a1"
+    },
+    "side_step_replay.json": {
+      "bytes": 533,
+      "sha256": "ead4f1c36f5f8665fbe1b700072b862c2927a9ac667824f42eb8e293aae2d5c9"
+    },
+    "side_step_source.mp4": {
+      "bytes": 799479,
+      "sha256": "d77b68e81c702ab17430494635b2a3f28b633c9d4095f89e4fe53d0513281bd9"
+    },
+    "side_step_source_mapping.gif": {
+      "bytes": 2316015,
+      "sha256": "28d5903324e1c2f116756efe21893c96140630672c9459d64876e5ec885ba051"
+    },
+    "side_step_source_mapping.mp4": {
+      "bytes": 984087,
+      "sha256": "c19fd4c19cf530dae7f7186d43430a1d507f81055cd85d0f14e50f14c992e0d5"
+    },
+    "source_full.mp4": {
+      "bytes": 3049145,
+      "sha256": "859244229e8e4e4fc8576fcf0949f2a51c490c4b64add61d2cb8d4a3aeb3c785"
+    }
+  }
+}

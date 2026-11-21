@@ -1,17 +1,47 @@
-<!-- tracks: README.md @ sha256:23d097856224134f -->
+<!-- tracks: README.md @ sha256:7393f455782caaab -->
 
 # Jumper 人体动作模仿实验
 
 [English](README.md) | **简体中文**
 
-本项目面向 22 自由度的 Jumper 螃蟹机器人，研究人体视频动作映射与 PPO 模仿训练。基于
-[KingKongRobotics/jumper](https://github.com/KingKongRobotics/jumper) 二次开发，比较基线为上游提交
-`198686eac0d188815d0943e9fee50de415edc80a`。
+**让六足螃蟹机器人模仿人物视频中的“闪身步、浪子踢球、狗熊哆嗦毛”。**
+本项目把人的双臂动作映射到机器人两条前肢，把人的双脚步序改编为其余四条腿，并将身体摆动映射到机身，
+形成“视频片段 → 人体关键点 → 六足动作参考 → PPO 模仿训练 → 策略回放”的完整实验流程。
 
-本项目的贡献是把人工审核的人体动作、机器人参考轨迹、训练任务和可追溯模型串成工程流程。
-PPO、MuJoCo、MediaPipe、上游 mjlab/BeyondMimic 动作跟踪框架均为复用。
+本项目新增的核心工作：
 
-![第二版踢腿参考：PD 物理执行，不是训练策略成绩](video/human_motion_01/v2/previews/02_kick_step_pd_physics.contact_sheet.png)
+- **人体到异构六足的动作映射**：解决两条人腿与四条支撑腿的数量差异，分别处理手臂、迈步、踢腿和机身。
+- **从小幅动作到大幅表达**：保留 v1/v2 两版，加入四足步序、收腿与前踢阶段、机身补偿及支撑时序。
+- **三个可独立训练和回放的任务**：提供参考数据、2000 轮 PPO 权重、源视频对照和本次真实策略录像。
+
+基于 [KingKongRobotics/jumper](https://github.com/KingKongRobotics/jumper) 二次开发，比较基线为上游提交
+`198686eac0d188815d0943e9fee50de415edc80a`。PPO、MuJoCo、MediaPipe 和上游 mjlab/BeyondMimic 跟踪框架为复用；
+本项目的贡献集中在人体视频到六足动作的适配、任务构建和可复查的实验结果。
+
+## 视频演示：输入、映射与训练结果
+
+左列把人物输入与 v2 的 PD 物理参考放在一起；右列是**加载已有 2000 轮权重后，由策略控制的 MuJoCo 回放**。
+点击动图可打开完整 MP4。左右两列独立循环，不能用各自动图的播放相位判断逐帧误差。
+
+| 动作 | 人物输入 → 六足映射参考（PD） | 训练后的策略回放（2000 轮） |
+| --- | --- | --- |
+| **闪身步** | [![闪身步：人物与 PD 参考](docs/media/human-motion/side_step_source_mapping.gif)](docs/media/human-motion/side_step_source_mapping.mp4) | [![闪身步：训练后策略](docs/media/human-motion/side_step_policy.gif)](docs/media/human-motion/side_step_policy.mp4) |
+| **浪子踢球** | [![浪子踢球：人物与 PD 参考](docs/media/human-motion/kick_step_source_mapping.gif)](docs/media/human-motion/kick_step_source_mapping.mp4) | [![浪子踢球：训练后策略](docs/media/human-motion/kick_step_policy.gif)](docs/media/human-motion/kick_step_policy.mp4) |
+| **狗熊哆嗦毛** | [![狗熊哆嗦毛：人物与 PD 参考](docs/media/human-motion/arm_body_sway_source_mapping.gif)](docs/media/human-motion/arm_body_sway_source_mapping.mp4) | [![狗熊哆嗦毛：训练后策略](docs/media/human-motion/arm_body_sway_policy.gif)](docs/media/human-motion/arm_body_sway_policy.mp4) |
+
+[原始输入视频（完整）](docs/media/human-motion/source_full.mp4) ·
+[闪身步输入片段](docs/media/human-motion/side_step_source.mp4) ·
+[浪子踢球输入片段](docs/media/human-motion/kick_step_source.mp4) ·
+[狗熊哆嗦毛实际输入片段](docs/media/human-motion/arm_body_sway_source.mp4)
+
+**本次训练结果展示：**三个已训练策略的单次尝试均运行到参考片尾，分别记录 13.93、9.13、9.47 秒视频；
+没有把自动重置后的新尝试拼接成连续表演。浪子踢球策略的右后腿在本次回放中前后行程约 **119.1 毫米**、
+上下约 **47.4 毫米**（机身相对运动学测量，排除前 0.5 秒）。前两个动作仍有幅度及姿态误差；
+第三个动作未学好大幅摆臂，保留其真实录像以便比较，尚不能称三个动作都成功复现。
+
+本次仅回放已有权重，**没有重新训练**。录像使用 native CPU 后端，200 Hz 物理、50 Hz 控制、单环境、
+训练观察噪声开启；原训练使用 Warp CUDA。它展示单次仿真执行，不代表多次成功率或真机效果。
+[录像命令、原始关节记录及测量方法](docs/media/human-motion/README.zh.md)可用于复查。
 
 ## 相对原仓库的创新与工程扩展
 
@@ -42,9 +72,9 @@ PPO、MuJoCo、MediaPipe、上游 mjlab/BeyondMimic 动作跟踪框架均为复�
 - [model](model/README.zh.md)：按动作名称查找模型和来源。
 - `tasks/jumper/human_*/media/`：训练真正读取的动作数据。
 
-公开仓库不包含原始人物视频、裁剪、人体叠加及对照视频，也不包含下载的姿态依赖、日志和转换缓存；保留源文件校验记录。
-重新提取或制作人与机器人对照时，需要提供有权使用的素材。现有机器人参考、机器人单独预览和策略回放不需要这些人物视频。
-提取脚本中的固定时间段针对已审核素材，不适用于任意视频。
+本次按项目作者要求，在 `docs/media/human-motion/` 发布输入视频、实际使用的三个片段、人物与参考对照、策略回放和关节测量。
+历史提取工作区仍保留源校验记录；下载的姿态依赖、训练日志和转换缓存不打包。第三段只使用 24.9–28.333 秒全身可见片段。
+提取脚本中的固定时间段针对本次素材，不适用于任意视频。详见[公开素材说明](video/PUBLIC_DATA.zh.md)。
 
 ## 安装
 
@@ -104,7 +134,7 @@ python video/human_motion_01/v1/extract_clips.py --source /path/to/source.mp4
 ```
 
 人体提取还需要 MediaPipe、OpenCV 和 v1/.tools/ 下的官方 Pose Landmarker 模型，这些可选依赖不打包进仓库。
-最终检查脚本要求源视频和片段的校验值匹配；素材缺失会明确报错，不会假称重新核验通过。
+最终检查脚本要求源视频和片段的校验值匹配。可向 `--source` 指定本仓库 `docs/media/human-motion/source_full.mp4`，重新生成工作区片段。
 
 ## 验证与当前限制
 
@@ -129,4 +159,5 @@ python -m pytest tests/test_registry.py tests/test_task_parity.py tests/test_ref
 
 原 Jumper 框架、资产和声明保留 KingKong Robotics 及各贡献者署名。
 见 [LICENSE](LICENSE)、[NOTICE](NOTICE)、[licenses](licenses/) 与[第三方代码来源](docs/VENDOR.md)。
-保留原 Apache-2.0 和第三方许可条款；本仓库不会为用户自备视频授予 Apache 许可，也不重新分发这些素材。
+保留原 Apache-2.0 和第三方许可条款。人物输入视频按项目作者要求作为演示素材附上，保留原画面署名/水印；
+原视频版权归原权利人，仓库代码许可证不为该视频另行授予许可。

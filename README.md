@@ -2,16 +2,52 @@
 
 **English** | [简体中文](README.zh.md)
 
-Human-video motion retargeting and PPO imitation experiments for the 22-DoF
-Jumper hexapod. This project extends
-[KingKongRobotics/jumper](https://github.com/KingKongRobotics/jumper), based on
-upstream commit `198686eac0d188815d0943e9fee50de415edc80a`.
+**Teach a six-legged crab robot the human-video motions Side Step, Kick Step and Arm/Body Sway.**
+Human arms drive the two front limbs, human footfalls are adapted to the other four legs,
+and torso movement drives the body. The experiment connects video clips, human landmarks,
+hexapod references, PPO imitation tasks and replayed policy results.
 
-The contribution is an engineering workflow connecting reviewed human motion,
-robot references, task setup and traceable policy candidates. PPO, MuJoCo,
-MediaPipe and the upstream mjlab/BeyondMimic tracking framework are reused.
+The project's main additions are:
 
-![V2 kick reference: PD execution, not a trained policy](video/human_motion_01/v2/previews/02_kick_step_pd_physics.contact_sheet.png)
+- **Human-to-hexapod retargeting:** adapt two human legs to four stepping legs while separating arm, kick and torso roles.
+- **Expressive motion revision:** preserve v1/v2, add four-leg footfall order, kick retraction/forward swing, body compensation and support schedules.
+- **Three independently trainable tasks:** include references, 2000-iteration PPO checkpoints, source comparisons and newly recorded policy rollouts.
+
+This extends [KingKongRobotics/jumper](https://github.com/KingKongRobotics/jumper), based on
+upstream commit `198686eac0d188815d0943e9fee50de415edc80a`. PPO, MuJoCo, MediaPipe and
+the upstream mjlab/BeyondMimic tracker are reused. The additions focus on video-to-hexapod
+adaptation, task construction and inspectable experimental results.
+
+## Watch the input, mapping and trained policies
+
+The middle column compares the human input with the v2 free-base PD reference. The right column
+shows **MuJoCo controlled by the saved 2000-iteration policy**, recorded for this showcase.
+Click each GIF for its complete MP4. Columns loop independently; their playback phase is not
+a frame-aligned error measurement.
+
+| Motion | Human input → hexapod reference (PD) | Trained-policy replay (2000 iterations) |
+| --- | --- | --- |
+| **Side Step** | [![Side Step: human and PD reference](docs/media/human-motion/side_step_source_mapping.gif)](docs/media/human-motion/side_step_source_mapping.mp4) | [![Side Step: trained policy](docs/media/human-motion/side_step_policy.gif)](docs/media/human-motion/side_step_policy.mp4) |
+| **Kick Step** | [![Kick Step: human and PD reference](docs/media/human-motion/kick_step_source_mapping.gif)](docs/media/human-motion/kick_step_source_mapping.mp4) | [![Kick Step: trained policy](docs/media/human-motion/kick_step_policy.gif)](docs/media/human-motion/kick_step_policy.mp4) |
+| **Arm/Body Sway** | [![Arm/Body Sway: human and PD reference](docs/media/human-motion/arm_body_sway_source_mapping.gif)](docs/media/human-motion/arm_body_sway_source_mapping.mp4) | [![Arm/Body Sway: trained policy](docs/media/human-motion/arm_body_sway_policy.gif)](docs/media/human-motion/arm_body_sway_policy.mp4) |
+
+[Full input video](docs/media/human-motion/source_full.mp4) ·
+[Side-step input](docs/media/human-motion/side_step_source.mp4) ·
+[Kick-step input](docs/media/human-motion/kick_step_source.mp4) ·
+[Actual sway input excerpt](docs/media/human-motion/arm_body_sway_source.mp4)
+
+**Recorded training results:** all three single attempts reached the reference boundary,
+producing 13.93, 9.13 and 9.47 seconds of video. Auto-reset attempts were not joined into
+one continuous performance. In this kick-policy replay, the right-rear foot spans about
+**119.1 mm fore/aft** and **47.4 mm vertically** in the body frame (kinematics from recorded
+joints, excluding the first 0.5 s). The first two policies still differ in amplitude and pose;
+the third has not learned the intended large front-arm gesture. Its actual replay is retained
+for comparison; successful reproduction of all three motions has not been established.
+
+These are existing checkpoints; **no retraining was performed**. Recordings use native CPU,
+200 Hz physics, 50 Hz control, one environment and training-level observation noise. Original
+training used Warp CUDA. A single simulation replay is not a success-rate study or hardware
+result. See [recording commands, joint records and measurement method](docs/media/human-motion/README.md).
 
 ## Extensions beyond the original repository
 
@@ -44,11 +80,12 @@ User-supplied video -> reviewed clips -> MediaPipe landmarks
 - [model](model/README.md): named policy candidates and provenance.
 - `tasks/jumper/human_*/media/`: the actual data read during training.
 
-Raw human footage, its crops/overlays/comparison movies, downloaded pose packages,
-logs and conversion caches are not included. Source hashes are retained. Supply
-footage you are authorized to use to rerun extraction or human/robot comparisons;
-existing robot references, robot-only previews and policy replay do not need it.
-The fixed extraction intervals describe this reviewed source, not arbitrary videos.
+At the project author's request, `docs/media/human-motion/` now includes the input video,
+three used excerpts, human/reference comparisons, policy replays and joint measurements.
+Historical extraction records retain source hashes. Downloaded pose packages, training logs
+and conversion caches remain excluded. Clip 3 uses only the full-body interval 24.9–28.333 s.
+The fixed extraction intervals describe this source, not arbitrary videos. See the
+[public-media notes](video/PUBLIC_DATA.md).
 
 ## Install
 
@@ -119,8 +156,8 @@ python video/human_motion_01/v1/extract_clips.py --source /path/to/source.mp4
 
 Pose extraction additionally needs MediaPipe/OpenCV and the official Pose
 Landmarker model under `v1/.tools/`; those optional dependencies are not vendored.
-Finalizers require the matching source/clip hashes and fail clearly if unavailable;
-they do not claim to have revalidated omitted footage.
+Finalizers require matching source/clip hashes. Pass the included
+`docs/media/human-motion/source_full.mp4` to `--source` to regenerate workspace clips.
 
 ## Validation and current limitations
 
@@ -159,5 +196,6 @@ Known limits:
 The original Jumper framework, assets and notices remain attributed to KingKong
 Robotics and their respective contributors. See [LICENSE](LICENSE), [NOTICE](NOTICE),
 [licenses](licenses/) and [upstream provenance](docs/VENDOR.md). Upstream Apache-2.0
-licensing and third-party terms are retained. User-supplied footage is not granted
-an Apache license by this repository and is not redistributed here.
+licensing and third-party terms are retained. Human input footage is included as demonstration material at the project author's request,
+with its visible attribution/watermark preserved. Its copyright remains with its original
+rightsholders; the code license does not grant a separate license to that footage.
