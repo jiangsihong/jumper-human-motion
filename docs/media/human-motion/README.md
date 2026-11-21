@@ -18,7 +18,8 @@ CUDA was unavailable to the recording process. It does not validate backend pari
 - `manifest.json`: file/checkpoint SHA-256, commands, timings, backend and kinematic metrics.
 
 The reference comparisons slow the human input 2x, 2x and 2.5x and add end holds.
-Policy recordings run in simulation time at 30 fps; GIFs are 10 fps previews.
+Policy recordings run in simulation time at 30 fps; GIFs are compact 8 fps previews.
+Policy GIFs crop the center of the frame to show the robot more clearly; MP4s retain the full frame.
 Independent GIFs do not start in sync. The MP4s have not been cut or speed-ramped.
 GIF looping starts another viewing of the file, not another measured policy attempt.
 
